@@ -1,0 +1,21 @@
+[submodule "plug/ack.vim"]
+	path = plug/ack.vim
+	url = https://github.com/mileszs/ack.vim
+[submodule "plug/cmp-buffer"]
+        path = plug/cmp-buffer
+	url = https://github.com/hrsh7th/nvim-cmp
+[submodule "plug/cmp-git"]
+        path = plug/cmp-git
+	url = https://github.com/hrsh7th/cmp-git
+[submodule "plug/cmp-nvim-lsp"]
+        path = plug/cmp-nvim-lsp
+	url = https://github.com/hrsh7th/nvim-cmp
+[submodule "plug/cmp-path"]
+        path = plug/cmp-path
+	url = https://github.com/hrsh7th/nvim-cmp
+[submodule "plug/cmp-vsnip"]
+        path = plug/cmp-vsnip
+	url = https://github.com/hrsh7th/vim-vsnip
+[submodule "plug/vim-vsnip"]
+        path = plug/vim-vsnip
+	url = https://github.com/hrsh7th/vim-vsnip
