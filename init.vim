@@ -39,6 +39,9 @@ Plug 'mileszs/ack.vim'
 "https://github.com/GameMakerDiscord/gml-tools-langserver
 "Plug 'GameMakerDiscord/gml-tools-langserver'
 
+"https://github.com/jlanzarotta/bufexplorer
+Plug 'jlanzarotta/bufexplorer'
+
 call plug#end()
 
 
@@ -129,11 +132,11 @@ EOF
 "-------------------------------------------------------------------------------------------\\
 "Setting                                                                                    ||
 "-------------------------------------------------------------------------------------------//
-"cd M:\GameMakerProjects\HAM
-cd M:\GameMakerProjects\Kingdom-Lost
+cd M:\GameMakerProjects\Dekamara
+"cd M:\GameMakerProjects\Kingdom-Lost
 "cd M:\GameMakerProjects\Kalyzmyr
     "Auto save
-    autocmd CursorHold * update
+    autocmd! CursorHold * update
     set updatetime=1
     set directory=M:\Programs\Vim\tmp
     set backupdir=M:\Programs\Vim\tmp
@@ -198,7 +201,8 @@ cd M:\GameMakerProjects\Kingdom-Lost
     set go+=e
     set guifont=Consolas:h9
     set winaltkeys=no
-    autocmd GUIEnter * simalt ~x "Start gvim in fullscreen mode
+    au GUIEnter * simalt ~x "Start gvim in fullscreen mode
+    au BufRead * set autoread
     "Disable blinking autocmd version
     "set noerrorbells visualbell t_vb=
     "if has('autocmd')
@@ -301,7 +305,7 @@ command! -nargs=+ Vrepyy
     nmap <silent> <leader>sv :so $MYVIMRC<CR>:Syndo filetype detect<CR>
     nmap <silent> <leader>ev :e $MYVIMRC<CR>
     nmap <leader>ve :e C:\Program Files (x86)\Vim\Vimfiles\
-    nmap <silent> <leader>eg :e C:\Program Files (x86)\Vim\Vimfiles\syntax\gml.vim<CR>
+    nmap <silent> <leader>eg :e C:\Users\Psy\AppData\Local\nvim\syntax\gml.vim<CR>
     nmap <leader>ek :e C:\Users\Psy\Appdata\Roaming\Kingdom_Lost\
     nmap <silent> <leader>oo :only<CR>
     "nmap gx gf<CR>:vs<CR>:e #<CR>
@@ -418,7 +422,7 @@ command! -nargs=+ Vrepyy
     nmap Q  :E %:h../..<CR>
     nmap <leader>drw idraw_sprite(sprite_index,image_index,x,y);<ESC>
     nmap <leader>dre idraw_sprite_ext(sprite_index,image_index,x,y,image_xscale,image_yscale,image_angle,image_blend,image_alpha);<ESC>
-    nmap <leader>gml Oif(live_call()) return live_result<ESC>;
+    nmap <leader>gml Oif(live_call()) return live_result;<ESC>
     " Find files using Telescope command-line sugar.
     nnoremap <leader>ff <cmd>Telescope find_files<cr>
     nnoremap <leader>fg <cmd>Telescope live_grep<cr>
@@ -447,7 +451,6 @@ command! -nargs=+ Vrepyy
 "-------------------------------------------------------------------------------------------\\
 "Insert maps                                                                                ||
 "-------------------------------------------------------------------------------------------//
-
 function DeleteHiddenBuffers()
     let tpbl=[]
     call map(range(1, tabpagenr('$')), 'extend(tpbl, tabpagebuflist(v:val))')
