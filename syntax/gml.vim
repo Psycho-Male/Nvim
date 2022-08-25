@@ -193,7 +193,7 @@ syn keyword gmlEventFunction event_inherited event_perform event_perform_object 
 
 syn keyword gmlEventVariable event_action event_number event_object event_type
 
-syn keyword gmlOSFunction os_browser os_device os_type os_version os_is_paused os_is_network_connected os_get_config os_get_language os_get_region os_get_info os_powersave_enable os_lock_orientation
+syn keyword gmlOSFunction os_browser os_device os_type os_version os_is_paused os_is_network_connected os_get_config os_get_language os_get_region os_get_info os_powersave_enable os_lock_orientation browser_not_a_browser browser_unknown browser_ie browser_ie_mobile browser_firefox browser_chrome browser_safari browser_safari_mobile browser_opera browser_tizen browser_windows_store
 
 syn keyword gmlSimpleParticleFunction effect_create_below effect_create_above effect_clear
 
@@ -309,6 +309,7 @@ syn match gmlAccessorOperator '\v\[\zs\s*\|'|  " ds_list[| ]
 syn match gmlAccessorOperator '\v\[\zs\s*\?'|  " ds_map[? ]
 syn match gmlAccessorOperator '\v\[\zs\s*\#'|  " ds_grid[# ]
 syn match gmlAccessorOperator '\v\[\zs\s*\@'|  " array[@ ]
+syn match gmlAccessorOperator '\v\[\zs\s*\$'|  " struct[$ ] not working?
 
 syn match gmlTernaryOperator '\v\zs\s*\?'|
 syn match gmlTernaryOperator '\v\zs\s*\:'
