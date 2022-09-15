@@ -42,6 +42,10 @@ Plug 'mileszs/ack.vim'
 "https://github.com/jlanzarotta/bufexplorer
 Plug 'jlanzarotta/bufexplorer'
 
+
+"Auto save https://github.com/Pocco81/auto-save.nvim
+Plug 'Pocco81/auto-save.nvim'
+
 call plug#end()
 
 
@@ -132,15 +136,25 @@ EOF
 "-------------------------------------------------------------------------------------------\\
 "Setting                                                                                    ||
 "-------------------------------------------------------------------------------------------//
-cd M:\GameMakerProjects\Dekamara
-"cd M:\GameMakerProjects\Kingdom-Lost
-"cd M:\GameMakerProjects\Kalyzmyr
-    "Auto save
-    autocmd! CursorHold * update
+"SETTERS-----------------------------------------------------------------------------------\\
+    lua <<EOF
+if vim.fn.isdirectory("M:/GameMakerProjects")==TRUE then
+    vim.opt.directory="M:/Programs/Vim/tmp"
+    vim.opt.backupdir="M:/Programs/Vim/tmp"
+    vim.opt.undodir  ="M:/Programs/Vim/tmp"
+    vim.fn("cd M:/GameMakerProjects/Dekamara")
+    --cd M:/GameMakerProjects/Kingdom-Lost
+    --cd M:/GameMakerProjects/Kalyzmyr
+else
+    vim.opt.directory="C:/tmp"
+    vim.opt.backupdir="C:/tmp"
+    vim.opt.undodir  ="C:/tmp"
+    vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2/Dekamara")
+    --vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2/Kingdom-Lost")
+    --vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2/Kalyzmyr")
+end
+EOF
     set updatetime=1
-    set directory=M:\Programs\Vim\tmp
-    set backupdir=M:\Programs\Vim\tmp
-    set undodir  =M:\Programs\Vim\tmp
     "set nocompatible
     set hidden "Don't delete unused buffers?
     set wildmenu
@@ -157,9 +171,7 @@ cd M:\GameMakerProjects\Dekamara
     filetype on
     filetype plugin on
     syntax on
-    "if !has("gui_running")
-        colorscheme psycho
-    "endif
+    colorscheme psycho
     set background=dark
     set ruler
     set hlsearch
@@ -219,6 +231,7 @@ cd M:\GameMakerProjects\Dekamara
         set guioptions-=L
         set t_Co=256 "256 color
     endif
+"------------------------------------------------------------------------------------------//
 "New windo command
 command! -nargs=+ -complete=command Windo
     \ let s:currentWindow = winnr() |
