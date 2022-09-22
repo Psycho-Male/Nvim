@@ -308,6 +308,7 @@ command! -nargs=+ Vrepyy
     nmap <leader>eko1 :call SetLog1()<CR>
     nmap <leader>eko2 :call SetLog2()<CR>
     nmap <leader>eko3 :call SetLog3()<CR>
+    nmap <leader>eko4 :call SetLog4()<CR>
     nmap <leader>ogml :term ++curwin datafiles\Gmlive\gmlive-server.exe<CR>
     nmap + <C-w>+
     nmap - <C-w>-
@@ -519,6 +520,21 @@ func SetLog3()
         view C:\Users\Psy\Appdata\Roaming\Dekamara\output.log
     else
         view C:\Users\Manko\Appdata\Roaming\Dekamara\output.log
+    endif
+    setlocal autoread
+    set syntax=logger
+    au CursorHold * checktime
+    set concealcursor=n
+    set nocuc
+    set nocul
+    let timer=timer_start(500,'UpdateFile',{'repeat':-1})
+    call timer_start(500,function('s:checktime'),{'repeat':-1})
+endfunc
+func SetLog4()
+    if isdirectory("C:\Users\Psy")
+        view C:\Users\Psy\Appdata\Roaming\BlackRoad\output.log
+    else
+        view C:\Users\Manko\Appdata\Roaming\BlackRoad\output.log
     endif
     setlocal autoread
     set syntax=logger
