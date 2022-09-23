@@ -142,14 +142,16 @@ if vim.fn.isdirectory("M:/GameMakerProjects")==TRUE then
     vim.opt.directory="M:/Programs/Vim/tmp"
     vim.opt.backupdir="M:/Programs/Vim/tmp"
     vim.opt.undodir  ="M:/Programs/Vim/tmp"
-    vim.fn("cd M:/GameMakerProjects/Dekamara")
-    --cd M:/GameMakerProjects/Kingdom-Lost
-    --cd M:/GameMakerProjects/Kalyzmyr
+    vim.fn("cd M:/GameMakerProjects/BlackRoad")
+    --vim.fn("cd M:/GameMakerProjects/Dekamara")
+    --vim.fn("cd M:/GameMakerProjects/Kingdom-Lost")
+    --vim.fn("cd M:/GameMakerProjects/Kalyzmyr")
 else
     vim.opt.directory="C:/tmp"
     vim.opt.backupdir="C:/tmp"
     vim.opt.undodir  ="C:/tmp"
-    vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2/Dekamara")
+    vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2/BlackRoad")
+    --vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2/Dekamara")
     --vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2/Kingdom-Lost")
     --vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2/Kalyzmyr")
 end
