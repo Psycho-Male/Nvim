@@ -137,15 +137,15 @@ EOF
 "Setting                                                                                    ||
 "-------------------------------------------------------------------------------------------//
 "SETTERS-----------------------------------------------------------------------------------\\
-    lua <<EOF
-if vim.fn.isdirectory("M:/GameMakerProjects")==TRUE then
+lua <<EOF
+if vim.fn.isdirectory("M:/GameMakerProjects") ~= 0 then
     vim.opt.directory="M:/Programs/Vim/tmp"
     vim.opt.backupdir="M:/Programs/Vim/tmp"
     vim.opt.undodir  ="M:/Programs/Vim/tmp"
-    --vim.fn("cd M:/GameMakerProjects/BlackRoad")
-    vim.fn("cd M:/GameMakerProjects/Dekamara")
-    --vim.fn("cd M:/GameMakerProjects/Kingdom-Lost")
-    --vim.fn("cd M:/GameMakerProjects/Kalyzmyr")
+    --vim.fn.chdir("M:/GameMakerProjects/BlackRoad")
+    vim.fn.chdir("M:/GameMakerProjects/Dekamara")
+    --vim.fn.chdir("M:/GameMakerProjects/Kingdom-Lost")
+    --vim.fn.chdir("M:/GameMakerProjects/Kalyzmyr")
 else
     vim.opt.directory="C:/tmp"
     vim.opt.backupdir="C:/tmp"
