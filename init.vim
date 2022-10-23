@@ -343,8 +343,7 @@ command! -nargs=+ Vrepyy
     nmap <silent> <leader>cx oTrace(""+string());<ESC>F"i
     nmap <silent> <leader>cs oTrace("--CALLSTACK--");for(var i=0,cs=debug_get_callstack();i<array_length(cs);i++) Trace(cs[i]);<ESC>
     nmap <silent> <leader>tp ^eaPop<ESC>
-    nmap <silent> <leader>ww o//<ESC>90a-<ESC>a\\<CR>//<ESC>90a<SPACE><ESC>a\|\|<ESC>o//<ESC>90a-<ESC>A//<ESC>kk^ll
-    "R@PsychoMale
+    nmap <silent> <leader>ww o//<ESC>90a=<ESC>a\\<CR>//<ESC>90a<SPACE><ESC>a\|\|<ESC>o//<ESC>90a=<ESC>A//<ESC>kk^llR@PsychoMale<ESC>j
 
     nmap <silent> <leader>wd v$3hxjjv$3hx
 
@@ -414,10 +413,10 @@ command! -nargs=+ Vrepyy
     "nmap <ESC>s<C-v> :vs<CR>:E<CR>:set buftype=""<CR>:set bf=""<CR>
     "nmap <ESC>s<C-s> :sp<CR>:E<CR>:set buftype=""<CR>:set bf=""<CR>
 
-    nmap <leader>,e :e <C-R>=expand("%:p:h") . "\\" <CR>
-    nmap <leader>,s :split <C-R>=expand("%:p:h") . "\\" <CR>
-    nmap <leader>,v :vs <C-R>=expand("%:p:h") . "\\" <CR>
-    nmap <leader>,t :tabe <C-R>=expand("%:p:h") . "\\" <CR>
+    nmap <leader>,e :e <C-R>=expand("%:.:h") . "\\" <CR>
+    nmap <leader>,s :split <C-R>=expand("%:.:h") . "\\" <CR>
+    nmap <leader>,v :vs <C-R>=expand("%:.:h") . "\\" <CR>
+    nmap <leader>,t :tabe <C-R>=expand('%:.:h') . "\\" <CR>
 
     nmap <C-_>- <C-W>-
     "Cursor line/column highlight toggle
@@ -488,7 +487,7 @@ func UpdateFile(timer)
     $
 endfunc
 func SetLog1()
-    if isdirectory("C:\Users\Psy")
+    if isdirectory("C:/Users/Psy")
         view C:\Users\Psy\Appdata\Roaming\Kingdom_Lost\output.log
     else
         view C:\Users\Manko\Appdata\Roaming\Kingdom_Lost\output.log
@@ -503,7 +502,7 @@ func SetLog1()
     call timer_start(500,function('s:checktime'),{'repeat':-1})
 endfunc
 func SetLog2()
-    if isdirectory("C:\Users\Psy")
+    if isdirectory("C:/Users/Psy")
         view C:\Users\Psy\Appdata\Roaming\Kalyzmyr\output.log
     else
         view C:\Users\Manko\Appdata\Roaming\Kalyzmyr\output.log
@@ -518,7 +517,7 @@ func SetLog2()
     call timer_start(500,function('s:checktime'),{'repeat':-1})
 endfunc
 func SetLog3()
-    if isdirectory("C:\Users\Psy")
+    if isdirectory("C:/Users/Psy")
         view C:\Users\Psy\Appdata\Roaming\Dekamara\output.log
     else
         view C:\Users\Manko\Appdata\Roaming\Dekamara\output.log
@@ -533,7 +532,7 @@ func SetLog3()
     call timer_start(500,function('s:checktime'),{'repeat':-1})
 endfunc
 func SetLog4()
-    if isdirectory("C:\Users\Psy")
+    if isdirectory("C:/Users/Psy")
         view C:\Users\Psy\Appdata\Roaming\BlackRoad\output.log
     else
         view C:\Users\Manko\Appdata\Roaming\BlackRoad\output.log
