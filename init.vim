@@ -143,19 +143,53 @@ if vim.fn.isdirectory("M:/GameMakerProjects") ~= 0 then
     vim.opt.backupdir="M:/Programs/Vim/tmp"
     vim.opt.undodir  ="M:/Programs/Vim/tmp"
     --vim.fn.chdir("M:/GameMakerProjects/BlackRoad")
-    vim.fn.chdir("M:/GameMakerProjects/Dekamara")
-    --vim.fn.chdir("M:/GameMakerProjects/Kingdom-Lost")
+    --vim.fn.chdir("M:/GameMakerProjects/Dekamara")
+    vim.fn.chdir("M:/GameMakerProjects/Kingdom Lost Reborn")
     --vim.fn.chdir("M:/GameMakerProjects/Kalyzmyr")
 else
     vim.opt.directory="C:/tmp"
     vim.opt.backupdir="C:/tmp"
     vim.opt.undodir  ="C:/tmp"
     --vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2/BlackRoad")
-    vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2/Dekamara")
-    --vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2/Kingdom-Lost")
+    --vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2/Dekamara")
+    vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2/Kingdom-Lost")
+    --vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2/Kingdom Lost Reborn")
     --vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2/Kalyzmyr")
 end
 EOF
+
+
+function! NextNonBlankLine(lnum)
+    let numlines = line('$')
+    let current = a:lnum+1
+
+    while current <= numlines
+        if getline(current) =~? '#endregion'
+            return current
+        endif
+
+        let current += 1
+    endwhile
+
+    return -2
+endfunction
+
+function! IndentLevel(lnum)
+    return indent(a:lnum) / &shiftwidth
+endfunction
+
+function! GetGMLFold(lnum)
+    "This doesn't work if fold is at the top
+    if a:lnum == '#region'
+        return '>1'
+    elseif a:lnum == '#endregion'
+        return '<1'
+    else
+        return '='
+    endif
+
+endfunction
+
     set updatetime=1
     "set nocompatible
     set hidden "Don't delete unused buffers?
@@ -168,7 +202,7 @@ EOF
     set expandtab
     set softtabstop=4 "disabled tabstop=4
     "set autochdir
-    "set tabstop=4
+    set tabstop=4
     "set cmdheight=2 "set command windows to 2 lines
     filetype on
     filetype plugin on
@@ -189,8 +223,11 @@ EOF
     set so=10 "Set cursor offset
     set incsearch
     set foldminlines=0
-    set foldmethod=indent
-    set foldexpr=getline(v:lnum)=~'^\\s*$'&&getline(v:lnum+1)=~'\\S'?'<1':1
+    set foldmethod=marker
+    set foldmarker=region,endregion
+    "set foldexpr=GetGMLFold(getline(v:lnum))
+    "set foldexpr=getline(v:lnum)=~'^\\s*$'&&getline(v:lnum+1)=~'\\S'?'<1':1
+    "set foldexpr=getline(v:lnum)=='#region'&&getline(v:lnum+1)=='#endregion'?'<1':1
     set foldclose=all
     set foldopen=all
     set foldnestmax=1
@@ -246,11 +283,11 @@ command! -nargs=+ -complete=command Syndo
 "VIMGREP
 "\ execute 'filetype plugin off' | " Doesn't really change search speed
 command! -nargs=+ Vrep
-    \ execute "Ack -G .gml /<args>/" | vert copen |
+    \ execute "Ack! -G .gml /<args>/" | vert copen |
 command! -nargs=+ Vrepjson
-    \ execute "Ack -G .json /<args>/" | vert copen |
+    \ execute "Ack! -G .json /<args>/" | vert copen |
 command! -nargs=+ Vrepyy
-    \ execute "Ack -G .yy /<args>/" | vert copen |
+    \ execute "Ack! -G .yy /<args>/" | vert copen |
 
 "--------------------------------------------------------------------------------------------\\
 "Mappings                                                                                    ||
@@ -285,7 +322,7 @@ command! -nargs=+ Vrepyy
 "--------------------------------------------------------------------------------------------//
     "nnoremap <Left>  :expand("%:p:h")<TAB><CR>
     "nnoremap <Right> :expand("%:p:h")<S-TAB><CR>
-    nnoremap <leader>vv :execute "Ack " expand("<cword>")<CR>
+    nnoremap <leader>vv :execute "Ack! " expand("<cword>")<CR>
     nnoremap <leader>gff :e scripts\<c-r><c-w>\<c-r><c-w>.gml<CR>
     nnoremap <leader>gfv :vs scripts\<c-r><c-w>\<c-r><c-w>.gml<CR>
     nnoremap <leader>gfs :sp scripts\<c-r><c-w>\<c-r><c-w>.gml<CR>
@@ -321,7 +358,7 @@ command! -nargs=+ Vrepyy
     nmap <silent> <leader>ev :e $MYVIMRC<CR>
     nmap <leader>ve :e C:\Program Files (x86)\Vim\Vimfiles\
     nmap <silent> <leader>eg :e C:\Users\Psy\AppData\Local\nvim\syntax\gml.vim<CR>
-    nmap <leader>ek :e C:\Users\Psy\Appdata\Roaming\Kingdom_Lost\
+    nmap <leader>ek :e C:\Users\Psy\Appdata\Roaming\Kingdom_Lost_Reborn\
     nmap <silent> <leader>oo :only<CR>
     "nmap gx gf<CR>:vs<CR>:e #<CR>
     nmap <F6> :w<ENTER>:!%<ENTER>
@@ -446,10 +483,14 @@ command! -nargs=+ Vrepyy
     nnoremap <leader>ntt <cmd>NvimTreeToggle<cr>
     nnoremap <leader>ntf <cmd>NvimTreeFocus<cr>
     nnoremap <leader>ntc <cmd>NvimTreeCollapse<cr>
+    " Fold method
+    nnoremap <leader>fm <cmd>set foldmethod=marker<cr>
+    nnoremap <leader>fi <cmd>set foldmethod=indent<cr>
+    nnoremap <leader>fe <cmd>set foldmethod=expr<cr>
 "-------------------------------------------------------------------------------------------\\
 "Visual maps                                                                                ||
 "-------------------------------------------------------------------------------------------//
-    vnoremap <leader>vv y:execute "Ack -G .gml <C-R>""<CR>
+    vnoremap <leader>vv y:execute "Ack! -G .gml <C-R>""<CR>
     vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
     vnoremap <leader>p "_dP
     vmap <silent> <leader>tt   yiTrace("<ESC>A: "+string());<ESC>hhP
@@ -488,9 +529,9 @@ func UpdateFile(timer)
 endfunc
 func SetLog1()
     if isdirectory("C:/Users/Psy")
-        view C:\Users\Psy\Appdata\Roaming\Kingdom_Lost\output.log
+        view C:\Users\Psy\Appdata\Roaming\Kingdom_Lost_Reborn\output.log
     else
-        view C:\Users\Manko\Appdata\Roaming\Kingdom_Lost\output.log
+        view C:\Users\Manko\Appdata\Roaming\Kingdom_Lost_Reborn\output.log
     endif
     setlocal autoread
     set syntax=logger
