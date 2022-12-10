@@ -22,6 +22,8 @@ syn match parenCurly    /[{}]/
 syn match gmlGlobal     /\v<\u\u/
 syn match gmlGlobal     /\v<\u\u\w+/
 syn match gmlLocal      /\(\<_\w\+\>\)/
+syn match gmlRegion   '\v#region.*'
+syn match gmlRegion   '\v#endregion'
 "Not working
 "syn match gmlLocal      /\<[i-k-j-l]\C\>/
 syn match gmlLocal      /\<.\>/
@@ -370,6 +372,7 @@ hi def link gmlWith                         Statement
 hi def link gmlLabel                        Label
 hi def link gmlDefine                       Macro
 hi def link gmlEndMacro                     EndMacro
+hi def link gmlRegion                       Region
 hi def link paren                           gmlFunction
 hi def link parenCurly                      Conditional
 hi def link gmlBlendmodeConstant            Macro
