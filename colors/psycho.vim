@@ -13,6 +13,8 @@ let g:colors_name = "psycho"
 let s:fg            = {"gui": "#90A0B0", "cterm": "0"}
 let s:bg            = {"gui": "#091114", "cterm": "1"}
 let s:bg_l1         = {"gui": "#182e36", "cterm": "0"}
+let s:curc          = {"gui": "#301a2c", "cterm": "0"}
+let s:curl          = {"gui": "#59124c", "cterm": "0"}
 let s:dark          = {"gui": "#585878", "cterm": "0"}
 let s:black         = {"gui": "#000000", "cterm": "1"}
 let s:red           = {"gui": "#F00000", "cterm": "0"}
@@ -95,13 +97,14 @@ call s:h("Underlined",      {"fg": s:fg             , "bg": s:bg            , "f
 call s:h("Error",           {"fg": s:black          , "bg": s:red           , "format": "none"})
 call s:h("SpellErrors",     {"fg": s:red                                    , "format": "undercurl"})
 call s:h("ColorColumn",     {                         "bg": s:bg_l1         , "format": "none"})
-call s:h("CursorLine",      {                         "bg": s:bg_l1         , "format": "none"})
+call s:h("CursorLine",      {                         "bg": s:curl          , "format": "none"})
 call s:h("CursorLineNr",    {"fg": s:teal           , "bg": s:bg_l1         , "format": "none"})
-call s:h("CursorColumn",    {                         "bg": s:bg_l1         , "format": "none"})
+call s:h("CursorColumn",    {                         "bg": s:curc          , "format": "none"})
 call s:h("Tabline",         {"fg": s:blue           , "bg": s:bg            , "format": "none"})
 call s:h("TablineFill",     {"fg": s:blue           , "bg": s:bg            , "format": "none"})
 call s:h("TablineSel",      {"fg": s:teal           , "bg": s:blue          , "format": "none"})
 call s:h("Comment",         {"fg": s:darkpurple                             , "format": "none"})
+call s:h("Region",          {"fg": s:amber                                  , "format": "none"})
 call s:h("Statement",       {"fg": s:purple                                 , "format": "none"})
 call s:h("Constant",        {"fg": s:turqoise                               , "format": "none"})
 call s:h("Type",            {"fg": s:red                                    , "format": "none"})
