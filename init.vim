@@ -30,8 +30,8 @@ Plug 'petertriho/cmp-git'
 "Plug 'windwp/nvim-autopairs'
 
 "https://github.com/kyazdani42/nvim-tree.lua
-"Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
-"Plug 'kyazdani42/nvim-tree.lua'
+Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
+Plug 'kyazdani42/nvim-tree.lua'
 
 "https://github.com/mileszs/ack.vim
 Plug 'mileszs/ack.vim'
@@ -48,6 +48,19 @@ Plug 'Pocco81/auto-save.nvim'
 
 call plug#end()
 
+"NvimTree==================================================================================\\
+lua <<EOF
+-- disable netrw at the very start of your init.lua (strongly advised)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- set termguicolors to enable highlight groups
+vim.opt.termguicolors = true
+
+-- empty setup using defaults
+require("nvim-tree").setup()
+EOF
+"==========================================================================================//
 
 "nvim-cmp----------------------------------------------------------------------------------\\
 "https://github.com/hrsh7th/nvim-cmp
@@ -118,7 +131,7 @@ lua <<EOF
   --})
 
   -- Setup lspconfig.
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
   -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
   --require('lspconfig')['gml-tools-langserver'].setup {
   --  capabilities = capabilities
@@ -142,17 +155,19 @@ if vim.fn.isdirectory("M:/GameMakerProjects") ~= 0 then
     vim.opt.directory="M:/Programs/Vim/tmp"
     vim.opt.backupdir="M:/Programs/Vim/tmp"
     vim.opt.undodir  ="M:/Programs/Vim/tmp"
+    vim.fn.chdir("M:/GameMakerProjects")
     --vim.fn.chdir("M:/GameMakerProjects/BlackRoad")
     --vim.fn.chdir("M:/GameMakerProjects/Dekamara")
-    vim.fn.chdir("M:/GameMakerProjects/Kingdom Lost Reborn")
+    --vim.fn.chdir("M:/GameMakerProjects/Kingdom Lost Reborn")
     --vim.fn.chdir("M:/GameMakerProjects/Kalyzmyr")
 else
     vim.opt.directory="C:/tmp"
     vim.opt.backupdir="C:/tmp"
     vim.opt.undodir  ="C:/tmp"
+    vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2")
     --vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2/BlackRoad")
     --vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2/Dekamara")
-    vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2/Kingdom-Lost")
+    --vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2/Kingdom-Lost")
     --vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2/Kingdom Lost Reborn")
     --vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2/Kalyzmyr")
 end
@@ -358,7 +373,7 @@ command! -nargs=+ Vrepyy
     nmap <silent> <leader>ev :e $MYVIMRC<CR>
     nmap <leader>ve :e C:\Program Files (x86)\Vim\Vimfiles\
     nmap <silent> <leader>eg :e C:\Users\Psy\AppData\Local\nvim\syntax\gml.vim<CR>
-    nmap <leader>ek :e C:\Users\Psy\Appdata\Roaming\Kingdom_Lost_Reborn\
+    nmap <leader>ek :e C:\Users\Psy\Appdata\Roaming\
     nmap <silent> <leader>oo :only<CR>
     "nmap gx gf<CR>:vs<CR>:e #<CR>
     nmap <F6> :w<ENTER>:!%<ENTER>
@@ -401,7 +416,7 @@ command! -nargs=+ Vrepyy
     "nmap <silent> <leader>s3 :source 3<CR>
     "nmap <silent> <leader>s4 :source 4<CR>
     nmap <silent> <leader>vw :vs<CR>
-    nmap <silent> <leader>sw :sp<CR>
+    nmap <silent> <leader>sw :sp<CR><C-W><C-J>
 
     nmap <silent> <leader>fl vBxafor(var i=0;i<ds_list_size(<ESC>pa);i++){o
     nmap <silent> <leader>fa vBxafor(var i=0;i<array_length(<ESC>pa);i++){o
@@ -473,6 +488,7 @@ command! -nargs=+ Vrepyy
     nmap Q  :E %:h../..<CR>
     nmap <leader>drw idraw_sprite(sprite_index,image_index,x,y);<ESC>
     nmap <leader>dre idraw_sprite_ext(sprite_index,image_index,x,y,image_xscale,image_yscale,image_angle,image_blend,image_alpha);<ESC>
+    nmap <leader>gmf k^wvt(yolive_name="<C-R>"";<ESC>
     nmap <leader>gml Oif(live_call()) return live_result;<ESC>
     " Find files using Telescope command-line sugar.
     nnoremap <leader>ff <cmd>Telescope find_files<cr>
@@ -487,6 +503,9 @@ command! -nargs=+ Vrepyy
     nnoremap <leader>fm <cmd>set foldmethod=marker<cr>
     nnoremap <leader>fi <cmd>set foldmethod=indent<cr>
     nnoremap <leader>fe <cmd>set foldmethod=expr<cr>
+    nnoremap <leader>cdk <cmd>cd Kalyzmyr<cr>
+    nnoremap <leader>cdd <cmd>cd Dekamara<cr>
+    nnoremap <leader>cdl <cmd>cd Kingdom\ Lost\ Reborn<cr>
 "-------------------------------------------------------------------------------------------\\
 "Visual maps                                                                                ||
 "-------------------------------------------------------------------------------------------//
@@ -524,6 +543,11 @@ endif
 fun! s:checktime(timer_id)
     checktime
 endfun
+command! -nargs=* -complete=command Term
+            \execute split|resize20|term
+func Term()
+    split|resize20|term
+endfunc
 func UpdateFile(timer)
     $
 endfunc
