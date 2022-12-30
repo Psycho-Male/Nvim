@@ -46,19 +46,23 @@ Plug 'jlanzarotta/bufexplorer'
 "Auto save https://github.com/Pocco81/auto-save.nvim
 Plug 'Pocco81/auto-save.nvim'
 
-call plug#end()
+"Lualine https://github.com/nvim-lualine/lualine.nvim
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
 
+call plug#end()
 "NvimTree==================================================================================\\
 lua <<EOF
+require('lualine').setup();
 -- disable netrw at the very start of your init.lua (strongly advised)
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
+--vim.g.loaded_netrw = 1
+--vim.g.loaded_netrwPlugin = 1
+--
 -- set termguicolors to enable highlight groups
-vim.opt.termguicolors = true
-
+--vim.opt.termguicolors = true
+--
 -- empty setup using defaults
-require("nvim-tree").setup()
+--require("nvim-tree").setup()
 EOF
 "==========================================================================================//
 
@@ -66,9 +70,6 @@ EOF
 "https://github.com/hrsh7th/nvim-cmp
 set completeopt=menu,menuone,noselect
 lua <<EOF
---require("nvim-tree").setup()
---require("nvim-autopairs").setup {}
---require('nvim-autopairs').remove_rule('{') -- remove rule (
 --require("cmp_git").setup()
   -- Setup nvim-cmp.
   local cmp = require('cmp')
@@ -327,8 +328,8 @@ command! -nargs=+ Vrepyy
     map mm :nohl<ENTER>
     "map <M-j> zj
     "map <M-k> zk
-    map <M-j> <DOWN>zj<UP>
-    map <M-k> zk<UP>
+    map <M-j> zj
+    map <M-k> zk
     map <M-u> [z
     map <M-d> ]z
     map <leader>ti i["+string(i)+"]<ESC>
@@ -416,7 +417,7 @@ command! -nargs=+ Vrepyy
     "nmap <silent> <leader>s3 :source 3<CR>
     "nmap <silent> <leader>s4 :source 4<CR>
     nmap <silent> <leader>vw :vs<CR>
-    nmap <silent> <leader>sw :sp<CR><C-W><C-J>
+    nmap <silent> <leader>sw :sp<CR>
 
     nmap <silent> <leader>fl vBxafor(var i=0;i<ds_list_size(<ESC>pa);i++){o
     nmap <silent> <leader>fa vBxafor(var i=0;i<array_length(<ESC>pa);i++){o
@@ -500,12 +501,12 @@ command! -nargs=+ Vrepyy
     nnoremap <leader>ntf <cmd>NvimTreeFocus<cr>
     nnoremap <leader>ntc <cmd>NvimTreeCollapse<cr>
     " Fold method
-    nnoremap <leader>fm <cmd>set foldmethod=marker<cr>
-    nnoremap <leader>fi <cmd>set foldmethod=indent<cr>
-    nnoremap <leader>fe <cmd>set foldmethod=expr<cr>
-    nnoremap <leader>cdk <cmd>cd Kalyzmyr<cr>
-    nnoremap <leader>cdd <cmd>cd Dekamara<cr>
-    nnoremap <leader>cdl <cmd>cd Kingdom\ Lost\ Reborn<cr>
+    nnoremap <leader>fmm <cmd>set foldmethod=marker<cr>
+    nnoremap <leader>fmi <cmd>set foldmethod=indent<cr>
+    nnoremap <leader>fme <cmd>set foldmethod=expr<cr>
+    nnoremap <leader>cdk <cmd>cd Kalyzmyr<cr><cmd>cd<cr>
+    nnoremap <leader>cdd <cmd>cd Dekamara<cr><cmd>cd<cr>
+    nnoremap <leader>cdl <cmd>cd Kingdom Lost Reborn<cr><cmd>cd<cr>
 "-------------------------------------------------------------------------------------------\\
 "Visual maps                                                                                ||
 "-------------------------------------------------------------------------------------------//
@@ -550,6 +551,21 @@ func Term()
 endfunc
 func UpdateFile(timer)
     $
+endfunc
+func SetLogBelow1()
+    below sp
+    if isdirectory("C:/Users/Psy")
+        view C:\Users\Psy\Appdata\Roaming\Kingdom_Lost_Reborn\output.log
+    else
+        view C:\Users\Manko\Appdata\Roaming\Kingdom_Lost_Reborn\output.log
+    endif
+    setlocal autoread
+    set syntax=logger
+    set concealcursor=n
+    "set nocuc
+    "set nocul
+    resize10
+    set winfixheight
 endfunc
 func SetLog1()
     if isdirectory("C:/Users/Psy")
@@ -619,3 +635,4 @@ command -nargs=? -bang Buffer if <q-args> != '' | exe 'buffer '.<q-args> | else 
 
 "AG The Silver Seacher
 let g:ackprg='ag --nogroup --nocolor --column'
+au FocusGained,BufEnter * :silent! !
