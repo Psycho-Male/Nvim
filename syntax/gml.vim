@@ -22,8 +22,9 @@ syn match parenCurly    /[{}]/
 syn match gmlGlobal     /\v<\u\u/
 syn match gmlGlobal     /\v<\u\u\w+/
 syn match gmlLocal      /\(\<_\w\+\>\)/
-syn match gmlRegion   '\v#region.*'
-syn match gmlRegion   '\v#endregion'
+syn match gmlRegion     '\v#region.*'
+syn match gmlRegion     '\v#endregion'
+syn region paren        start="{" end="}" transparent
 "Not working
 "syn match gmlLocal      /\<[i-k-j-l]\C\>/
 syn match gmlLocal      /\<.\>/
@@ -50,7 +51,7 @@ syn match gmlDSType '\v<ds_type_(map|list|stack|grid|queue|priority)>'
 syn match gmlDSFunction '\v<ds_(exists|set_precision|exists_destroy)>'
 syn match gmlDSFunction '\v<ds_(grid|list|map|queue|stack|priority)_(create|destroy|clear)>'
 
-syn keyword gmlArrayFunction array_create array_length_1d array_length_2d array_height_2d is_array array_set array_get array_copy array_equals  
+syn keyword gmlArrayFunction array_create array_length is_array array_set array_get array_copy array_equals  
 
 syn keyword gmlDSGridFunction ds_grid_create ds_grid_destroy ds_grid_width ds_grid_height ds_grid_resize ds_grid_clear ds_grid_set ds_grid_set_disk ds_grid_set_grid_region ds_grid_set_region ds_grid_shuffle ds_grid_sort ds_grid_get ds_grid_get_max ds_grid_get_mean ds_grid_get_min ds_grid_get_sum ds_grid_get_disk_max ds_grid_get_disk_mean ds_grid_get_disk_min ds_grid_get_disk_sum ds_grid_add ds_grid_add_region ds_grid_add_disk ds_grid_add_grid_region ds_grid_multiply ds_grid_multiply_disk ds_grid_multiply_region ds_grid_multiply_grid_region ds_grid_value_exists ds_grid_value_disk_exists ds_grid_value_x ds_grid_value_y ds_grid_value_disk_x ds_grid_value_disk_y ds_grid_copy ds_grid_read ds_grid_write
 
@@ -88,7 +89,7 @@ syn keyword gmlTextFileFunction get_open_filename get_open_filename_ext get_save
 
 syn keyword gmlIniFileFunction ini_open ini_close ini_write_real ini_write_string ini_read_real ini_read_string ini_key_exists ini_section_exists ini_key_delete ini_section_delete ini_open_from_string file_text_open_read file_text_open_write file_text_open_append file_text_open_from_string file_text_read_real file_text_read_string file_text_readln file_text_write_real file_text_write_string file_text_writeln file_text_eoln file_text_eof file_text_close
 
-syn keyword gmlAssetFunction asset_get_index asset_get_type typeof asset_unknown asset_object asset_script asset_sprite asset_room asset_sound asset_tiles asset_path asset_font asset_timeline asset_shader tag_get_assets tag_get_assset_ids asset_get_tags asset_add_tags asset_remove_tags asset_has_tags asset_has_any_tag asset_clear_tags
+syn keyword gmlAssetFunction asset_get_index asset_get_type typeof asset_unknown asset_object asset_script asset_sprite asset_room asset_sound asset_tiles asset_path asset_font asset_timeline asset_shader tag_get_assets tag_get_asset_ids asset_get_tags asset_add_tags asset_remove_tags asset_has_tags asset_has_any_tag asset_clear_tags
 
 syn match gmlBackgroundFunction '\v<background_(index|visible|alpha|blend|x|y|foreground|hspeed|vspeed|htiled|vtiled|width|height|xscale|yscale|colour color|showcolour showcolor)'
 syn match gmlBackgroundFunction '\v<background_get_(name|width|height|texture|uvs)'
@@ -231,7 +232,7 @@ syn keyword gmlShaderConstant MATRIX_VIEW MATRIX_PROJECTION MATRIX_WORLD MATRIX_
 
 " TODO: add steam integration functions
 
-syn keyword gmlStringFunction ansi_char chr ord real is_string string string_byte_at string_byte_length string_set_byte_at string_char_at string_ord_at string_copy string_count string_delete string_digits string_format string_insert string_length string_letters string_lettersdigits string_lower string_pos string_pos_ext string_last_pos string_last_pos_ext string_repeat string_replace string_replace_all string_upper string_height string_height_ext string_width string_width_ext clipboard_has_text clipboard_get_text clipboard_set_text str int
+syn keyword gmlStringFunction ansi_char chr ord real is_string string string_byte_at string_byte_length string_set_byte_at string_char_at string_ord_at string_copy string_count string_delete string_digits string_format string_insert string_length string_letters string_lettersdigits string_lower string_pos string_pos_ext string_last_pos string_last_pos_ext string_repeat string_replace string_replace_all string_upper string_height string_height_ext string_width string_width_ext clipboard_has_text clipboard_get_text clipboard_set_text str int string_starts_with string_ends_with string_hash_to_newline string_trim string_trim_start string_trim_end string_split string_split_ext string_join string_join_ext string_concat string_concat_ext string_foreach
 
 syn keyword gmlSurfaceFunction surface_exists surface_create surface_create_ext surface_resize surface_set_target surface_set_target_ext surface_reset_target surface_copy surface_copy_part surface_get_height surface_get_width surface_get_texture surface_getpixel surface_getpixel_ext surface_free surface_save surface_save_part
 
@@ -338,7 +339,7 @@ syn match gmlBuiltinScriptVariable '\v<argument(1[0-5]|[0-9])>'
 "syn region gmlSyntaxBracket start='\[' end=']'
 "syn region gmlSyntaxBracket start='(' end=')'
 
-syn keyword gmlEventTypeConstant ev_create ev_destroy ev_step ev_alarm ev_keyboard ev_keypress ev_keyrelease ev_mouse ev_gesture ev_collision ev_other ev_outside ev_boundary ev_game_start ev_game_end ev_room_start ev_room_end ev_no_more_lives ev_no_more_health ev_animation_end ev_end_if_pat ev_close_button ev_draw ev_draw_being ev_draw_end ev_draw_pre ev_draw_post ev_gui ev_gui_begin ev_gui_end
+syn keyword gmlEventTypeConstant ev_create ev_destroy ev_step ev_step_begin ev_step_normal ev_step_end ev_alarm ev_keyboard ev_keypress ev_keyrelease ev_mouse ev_gesture ev_collision ev_other ev_outside ev_boundary ev_game_start ev_game_end ev_room_start ev_room_end ev_no_more_lives ev_no_more_health ev_animation_end ev_end_if_pat ev_close_button ev_draw ev_draw_normal ev_draw_being ev_draw_end ev_draw_pre ev_draw_post ev_gui ev_gui_begin ev_gui_end
 syn match gmlEventNumberConstant '\v<ev_step_(normal|begin|end)>'
 syn match gmlEventNumberConstant '\v<ev_draw_(begin|end|pre|post)>'
 syn match gmlEventNumberConstant '\v<ev_gui_(begin|end)>'
