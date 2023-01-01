@@ -1,4 +1,0 @@
---require(stdpath("config") . "settings.lua")
---require(stdpath("config") . "mappings.lua")
---require(stdpath("config") . "plugs.lua")
---require(stdpath("config") . "cmd.lua")

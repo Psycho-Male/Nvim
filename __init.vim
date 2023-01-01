@@ -53,17 +53,18 @@ Plug 'kyazdani42/nvim-web-devicons'
 call plug#end()
 "NvimTree==================================================================================\\
 lua <<EOF
-require('lualine').setup();
+require('lualine').setup()
 -- disable netrw at the very start of your init.lua (strongly advised)
---vim.g.loaded_netrw = 1
---vim.g.loaded_netrwPlugin = 1
---
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- set termguicolors to enable highlight groups
---vim.opt.termguicolors = true
---
--- empty setup using defaults
---require("nvim-tree").setup()
+vim.opt.termguicolors = true
+
+--empty setup using defaults
+require("nvim-tree").setup()
 EOF
+lua require"nvim-tree".setup {}
 "==========================================================================================//
 
 "nvim-cmp----------------------------------------------------------------------------------\\
