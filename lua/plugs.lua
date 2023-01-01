@@ -1,10 +1,11 @@
 return require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
-
     --https://github.com/nvim-telescope/telescope.nvim
-    use 'nvim-lua/plenary.nvim'
-    use 'nvim-telescope/telescope.nvim'
+    use {
+        'nvim-telescope/telescope.nvim', tag = '0.1.0',
+        requires = { {'nvim-lua/plenary.nvim'} },
+    }
 
     use 'BurntSushi/ripgrep'
     use 'sharkdp/fd'
@@ -25,7 +26,11 @@ return require('packer').startup(function(use)
     use 'petertriho/cmp-git'
 
     --https://github.com/nvim-treesitter/nvim-treesitter
-    --use 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        'call: TSUpdate',
+        config = function() require('nvim-treesitter.configs').setup() end
+    }
 
     --https://github.com/windwp/nvim-autopairs
     --use 'windwp/nvim-autopairs'
@@ -34,7 +39,6 @@ return require('packer').startup(function(use)
     use {
         'nvim-tree/nvim-tree.lua',
         requires = {'nvim-tree/nvim-web-devicons'}, -- optional, for file icons
-        config = function() require('nvim-tree').setup() end
     }
 
     --https://github.com/mileszs/ack.vim
@@ -57,6 +61,7 @@ return require('packer').startup(function(use)
         config = function() require('lualine').setup() end
     }
 
+    --https://github.com/kelly-lin/telescope-ag
     use({ "kelly-lin/telescope-ag", requires = { { "nvim-telescope/telescope.nvim" } } })
 
 end)

@@ -5,6 +5,10 @@ require "cmd"
 
 
 
+require('telescope').setup()
+require('nvim-tree').setup()
+
+
 
 
 -- disable netrw at the very start of your init.lua (strongly advised)

@@ -41,15 +41,13 @@
     vim.keymap.set("n","z-",":set foldnestmax=1<CR>")
     vim.keymap.set("n","z+",":set foldnestmax=2<CR>")
     vim.keymap.set("n","<leader>bw",":BW<CR>")
-    vim.keymap.set("n","<leader>sv",":so $MYVIMRC<CR>:Syndo filetype detect<CR>")
+    vim.keymap.set("n","<leader>sv",":so $MYVIMRC<CR>")
     vim.keymap.set("n","<leader>ev",":e $MYVIMRC<CR>")
     vim.keymap.set("n","<leader>ve",":e C:\\Program Files (x86)\\Vim\\Vimfiles\\")
     vim.keymap.set("n","<leader>eg",":e C:\\Users\\Psy\\AppData\\Local\\nvim\\syntax\\gml.vim<CR>")
     vim.keymap.set("n","<leader>ek",":e C:\\Users\\Psy\\Appdata\\Roaming\\")
     vim.keymap.set("n","<leader>oo",":only<CR>")
     vim.keymap.set("n","<F6>",":w<ENTER>:!%<ENTER>")
-    vim.keymap.set("n","<F2>",":Syndo filetype detect<CR>")
-    vim.keymap.set("n","<F3>",":let t:mytablabel = ''<Left>")
     --GAMEMAKER MACROS
     vim.keymap.set("n","<leader>tt","yiwiTrace('<ESC>A: '+string());<ESC>hhP")
     vim.keymap.set("n","<leader>td","yiwiGuiTrace('<ESC>A: ',);<ESC>hP")
@@ -133,9 +131,6 @@
     vim.keymap.set("n","<leader>,t",":tabe <C-R>=expand('%:.:h') . '\\' <CR>")
 
     vim.keymap.set("n","<C-_>-","<C-W>-")
-    --Cursor line/column highlight toggle
-    vim.keymap.set("n","<TAB>cc",":Windo set cuc<CR>:Windo set cul<CR>")
-    vim.keymap.set("n","<TAB>ch",":Windo set nocuc<CR>:Windo set nocul<CR>")
     --Quick Indent/Unindent
     vim.keymap.set("n","<TAB>ik","kvj^f{%j>")
     vim.keymap.set("n","<TAB>ij","jvk^f{%k>")
