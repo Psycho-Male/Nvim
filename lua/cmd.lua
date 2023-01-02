@@ -52,13 +52,3 @@ vim.api.nvim_create_user_command(
     'split | resize20 | term',
     {}
 )
-vim.api.nvim_create_user_command(
-    'UpdateFile',
-    'execute("$")',
-    {}
-)
-vim.api.nvim_create_user_command(
-    'Checktime',
-    'execute("checktime")',
-    {}
-)
