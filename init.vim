@@ -267,7 +267,7 @@ endfunction
     endfunction
     set guitablabel=%{GuiTabLabel()}
     set go+=e
-    set guifont=Consolas:h10
+    set guifont=Consolas:h11
     set winaltkeys=no
     au GUIEnter * simalt ~x "Start gvim in fullscreen mode
     au BufRead * set autoread
