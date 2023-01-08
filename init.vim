@@ -55,7 +55,7 @@ Plug 'kelly-lin/telescope-ag'
 call plug#end()
 
 lua <<EOF
-require('lualine').setup()
+--require('lualine').setup()
 -- disable netrw at the very start of your init.lua (strongly advised)
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
