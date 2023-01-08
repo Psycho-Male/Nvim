@@ -340,8 +340,7 @@ command! -nargs=+ Vrepyy
     "nnoremap <Left>  :expand("%:p:h")<TAB><CR>
     "nnoremap <Right> :expand("%:p:h")<S-TAB><CR>
     nnoremap <leader>vv :execute "Ack! " expand("<cword>")<CR>
-    "nnoremap <leader>a  :AckWindow 
-    nnoremap <leader>a  :AckWindow 
+    nnoremap <leader>a  :Ack!
     nnoremap <leader>gff :e scripts\<c-r><c-w>\<c-r><c-w>.gml<CR>
     nnoremap <leader>gfv :vs scripts\<c-r><c-w>\<c-r><c-w>.gml<CR>
     nnoremap <leader>gfs :sp scripts\<c-r><c-w>\<c-r><c-w>.gml<CR>
