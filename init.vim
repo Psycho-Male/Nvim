@@ -1,3 +1,16 @@
+"https://github.com/windwp/nvim-autopairs
+"Plug 'windwp/nvim-autopairs'
+"https://github.com/kyazdani42/nvim-tree.lua
+"Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
+"Plug 'kyazdani42/nvim-tree.lua'
+"https://github.com/nvim-treesitter/nvim-treesitter
+"Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+"empty setup using defaults
+"require("nvim-tree").setup()
+"Plug 'hrsh7th/cmp-cmdline'
+"https://github.com/GameMakerDiscord/gml-tools-langserver
+"Plug 'GameMakerDiscord/gml-tools-langserver'
+"
 "Plugin Manager: https://github.com/junegunn/vim-plug"
 call plug#begin(stdpath("config") . "/plug")
 
@@ -12,7 +25,6 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
-"Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 "
 "https://github.com/hrsh7th/vim-vsnip
@@ -22,25 +34,11 @@ Plug 'hrsh7th/vim-vsnip'
 "https://github.com/petertriho/cmp-git
 Plug 'petertriho/cmp-git'
 
-"https://github.com/nvim-treesitter/nvim-treesitter
-"Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-
-"https://github.com/windwp/nvim-autopairs
-"Plug 'windwp/nvim-autopairs'
-
-"https://github.com/kyazdani42/nvim-tree.lua
-"Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
-"Plug 'kyazdani42/nvim-tree.lua'
-
 "https://github.com/mileszs/ack.vim
 Plug 'mileszs/ack.vim'
 
-"https://github.com/GameMakerDiscord/gml-tools-langserver
-"Plug 'GameMakerDiscord/gml-tools-langserver'
-
 "https://github.com/jlanzarotta/bufexplorer
 Plug 'jlanzarotta/bufexplorer'
-
 
 "Auto save https://github.com/Pocco81/auto-save.nvim
 Plug 'Pocco81/auto-save.nvim'
@@ -55,16 +53,12 @@ Plug 'kelly-lin/telescope-ag'
 call plug#end()
 
 lua <<EOF
---require('lualine').setup()
+require('lualine').setup()
 -- disable netrw at the very start of your init.lua (strongly advised)
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+-- This disabled Explore commands
+--vim.g.loaded_netrw = 1
+--vim.g.loaded_netrwPlugin = 1
 
--- set termguicolors to enable highlight groups
-vim.opt.termguicolors = true
-
---empty setup using defaults
---require("nvim-tree").setup()
 EOF
 "telescope.load_extension("ag")
 
@@ -207,6 +201,7 @@ function! GetGMLFold(lnum)
 
 endfunction
 
+    set termguicolors
     set updatetime=1
     "set nocompatible
     set hidden "Don't delete unused buffers?
@@ -340,7 +335,11 @@ command! -nargs=+ Vrepyy
     "nnoremap <Left>  :expand("%:p:h")<TAB><CR>
     "nnoremap <Right> :expand("%:p:h")<S-TAB><CR>
     nnoremap <leader>vv :execute "Ack! " expand("<cword>")<CR>
-    nnoremap <leader>a  :Ack!
+    nnoremap <leader>vg :execute "Ack! -G .gml " expand("<cword>")<CR>
+    nnoremap <leader>vy :execute "Ack! -G .yy " expand("<cword>")<CR>
+    nnoremap <leader>aa :Ack! 
+    nnoremap <leader>ag :Ack! -G .gml 
+    nnoremap <leader>ay :Ack! -G .yy 
     nnoremap <leader>gff :e scripts\<c-r><c-w>\<c-r><c-w>.gml<CR>
     nnoremap <leader>gfv :vs scripts\<c-r><c-w>\<c-r><c-w>.gml<CR>
     nnoremap <leader>gfs :sp scripts\<c-r><c-w>\<c-r><c-w>.gml<CR>
