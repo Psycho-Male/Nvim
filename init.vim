@@ -53,7 +53,24 @@ Plug 'kelly-lin/telescope-ag'
 call plug#end()
 
 lua <<EOF
-require('lualine').setup()
+require('lualine').setup {
+    sections = {
+      lualine_a = {'mode'},
+      lualine_b = {'branch', 'diff', 'diagnostics'},
+      lualine_c = {'%F'},
+      lualine_x = {'encoding', 'fileformat', 'filetype'},
+      lualine_y = {'progress'},
+      lualine_z = {'location'}
+    },
+    inactive_sections = {
+      lualine_a = {},
+      lualine_b = {'%F'},
+      lualine_c = {},
+      lualine_x = {},
+      lualine_y = {},
+      lualine_z = {},
+    },
+}
 -- disable netrw at the very start of your init.lua (strongly advised)
 -- This disabled Explore commands
 --vim.g.loaded_netrw = 1
@@ -365,6 +382,7 @@ command! -nargs=+ Vrepyy
     nmap <leader>eko2 :call SetLog2()<CR>
     nmap <leader>eko3 :call SetLog3()<CR>
     nmap <leader>eko4 :call SetLog4()<CR>
+    nmap <leader>eko5 :call SetLog5()<CR>
     nmap <leader>ogml :term ++curwin datafiles\Gmlive\gmlive-server.exe<CR>
     nmap + <C-w>+
     nmap - <C-w>-
@@ -550,81 +568,72 @@ endfunc
 func UpdateFile(timer)
     $
 endfunc
-func SetLogBelow1()
-    below sp
+func SLog(name)
+    let path=""
     if isdirectory("C:/Users/Psy")
-        view C:\Users\Psy\Appdata\Roaming\Kingdom_Lost_Reborn\output.log
+        let path="C:/Users/Psy/Appdata/Roaming/" .. a:name .."/output.log"
     else
-        view C:\Users\Manko\Appdata\Roaming\Kingdom_Lost_Reborn\output.log
-    endif
-    setlocal autoread
-    set syntax=logger
+        let path="C:/Users/Manko/Appdata/Roaming/" .. a:name .. "/output.log"
+    end
+    set autoread
+    syntax=logger
     set concealcursor=n
-    "set nocuc
-    "set nocul
+    set nocuc
+    set nocul
     resize10
     set winfixheight
+    execute "view ".path
+    echo path
 endfunc
-func SetLog1()
+"User command to call Log functions
+command! -nargs=1 Log :call Log(<q-args>)
+command! -nargs=1 VLog :call VLog(<q-args>)
+command! -nargs=1 SLog :call SLog(<q-args>)
+func VLog(name)
+    let path=""
     if isdirectory("C:/Users/Psy")
-        view C:\Users\Psy\Appdata\Roaming\Kingdom_Lost_Reborn\output.log
+        let path="C:/Users/Psy/Appdata/Roaming/" .. fnameescape(a:name) .."/output.log"
     else
-        view C:\Users\Manko\Appdata\Roaming\Kingdom_Lost_Reborn\output.log
-    endif
-    setlocal autoread
-    set syntax=logger
-    au CursorHold * checktime
+        let path="C:/Users/Manko/Appdata/Roaming/" .. fnameescape(a:name) .. "/output.log"
+    end
+    vs
+    set autoread
+    syntax=logger
     set concealcursor=n
     set nocuc
     set nocul
+    set winfixwidth
+    execute "view ".path
+    echo path
+endfunc
+func Log(name)
+    let path=""
+    if isdirectory("C:/Users/Psy")
+        let path="C:/Users/Psy/Appdata/Roaming/" .. fnameescape(a:name) .."/output.log"
+    else
+        let path="C:/Users/Manko/Appdata/Roaming/" .. fnameescape(a:name) .. "/output.log"
+    end
+    set autoread
+    syntax=logger
+    set concealcursor=n
+    set nocuc
+    set nocul
+    execute "view ".path
+    au CursorHold * checktime
     let timer=timer_start(500,'UpdateFile',{'repeat':-1})
     call timer_start(500,function('s:checktime'),{'repeat':-1})
+endfunc
+
+func SetLog1()
+    call Log("Kingdom_Lost_Reborn")
 endfunc
 func SetLog2()
-    if isdirectory("C:/Users/Psy")
-        view C:\Users\Psy\Appdata\Roaming\Kalyzmyr\output.log
-    else
-        view C:\Users\Manko\Appdata\Roaming\Kalyzmyr\output.log
-    endif
-    setlocal autoread
-    set syntax=logger
-    au CursorHold * checktime
-    set concealcursor=n
-    set nocuc
-    set nocul
-    let timer=timer_start(500,'UpdateFile',{'repeat':-1})
-    call timer_start(500,function('s:checktime'),{'repeat':-1})
+    call Log("Kalyzmyr")
 endfunc
 func SetLog3()
-    if isdirectory("C:/Users/Psy")
-        view C:\Users\Psy\Appdata\Roaming\Dekamara\output.log
-    else
-        view C:\Users\Manko\Appdata\Roaming\Dekamara\output.log
-    endif
-    setlocal autoread
-    set syntax=logger
-    au CursorHold * checktime
-    set concealcursor=n
-    set nocuc
-    set nocul
-    let timer=timer_start(500,'UpdateFile',{'repeat':-1})
-    call timer_start(500,function('s:checktime'),{'repeat':-1})
+    Log("Dekamara")
 endfunc
-func SetLog4()
-    if isdirectory("C:/Users/Psy")
-        view C:\Users\Psy\Appdata\Roaming\BlackRoad\output.log
-    else
-        view C:\Users\Manko\Appdata\Roaming\BlackRoad\output.log
-    endif
-    setlocal autoread
-    set syntax=logger
-    au CursorHold * checktime
-    set concealcursor=n
-    set nocuc
-    set nocul
-    let timer=timer_start(500,'UpdateFile',{'repeat':-1})
-    call timer_start(500,function('s:checktime'),{'repeat':-1})
-endfunc
+
 "Buffer command taken from: https://vim.fandom.com/wiki/Easier_buffer_switching
 "Provides easier buffer switching method, but it's not like Nerdtree or
 "something....
