@@ -29,7 +29,7 @@ syn region paren        start="{" end="}" transparent
 "syn match gmlLocal      /\<[i-k-j-l]\C\>/
 syn match gmlLocal      /\<.\>/
 syn keyword gmlTodo contained TODO FIXME NOTE XXX SEE
-syn keyword gmlType var globalvar static method constructor new toString delete
+syn keyword gmlType var globalvar static constructor new toString delete
 syn keyword gmlBoolean true false
 syn keyword gmlEndMacro   exit break return continue 
 syn keyword gmlKeyword self other all noone undefined global fail success undef
@@ -51,7 +51,7 @@ syn match gmlDSType '\v<ds_type_(map|list|stack|grid|queue|priority)>'
 syn match gmlDSFunction '\v<ds_(exists|set_precision|exists_destroy)>'
 syn match gmlDSFunction '\v<ds_(grid|list|map|queue|stack|priority)_(create|destroy|clear)>'
 
-syn keyword gmlArrayFunction array_create array_length is_array array_set array_get array_copy array_equals  
+syn keyword gmlArrayFunction array_create array_length is_array array_set array_get array_copy array_equals method
 
 syn keyword gmlDSGridFunction ds_grid_create ds_grid_destroy ds_grid_width ds_grid_height ds_grid_resize ds_grid_clear ds_grid_set ds_grid_set_disk ds_grid_set_grid_region ds_grid_set_region ds_grid_shuffle ds_grid_sort ds_grid_get ds_grid_get_max ds_grid_get_mean ds_grid_get_min ds_grid_get_sum ds_grid_get_disk_max ds_grid_get_disk_mean ds_grid_get_disk_min ds_grid_get_disk_sum ds_grid_add ds_grid_add_region ds_grid_add_disk ds_grid_add_grid_region ds_grid_multiply ds_grid_multiply_disk ds_grid_multiply_region ds_grid_multiply_grid_region ds_grid_value_exists ds_grid_value_disk_exists ds_grid_value_x ds_grid_value_y ds_grid_value_disk_x ds_grid_value_disk_y ds_grid_copy ds_grid_read ds_grid_write
 
