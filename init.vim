@@ -50,6 +50,9 @@ Plug 'kyazdani42/nvim-web-devicons'
 "https://github.com/kelly-lin/telescope-ag 
 Plug 'kelly-lin/telescope-ag'
 
+"https://github.com/mtth/scratch.vim
+Plug 'mtth/scratch.vim'
+
 call plug#end()
 
 lua <<EOF
@@ -527,6 +530,7 @@ command! -nargs=+ Vrepyy
     nnoremap <leader>cdk <cmd>cd Kalyzmyr<cr><cmd>cd<cr>
     nnoremap <leader>cdd <cmd>cd Dekamara<cr><cmd>cd<cr>
     nnoremap <leader>cdl <cmd>cd Kingdom Lost Reborn<cr><cmd>cd<cr>
+    "nnoremap <leader>go  :execute "e objects/"expand("<cword>")"/"expand("<cword>")".gml"<CR>
 "-------------------------------------------------------------------------------------------\\
 "Visual maps                                                                                ||
 "-------------------------------------------------------------------------------------------//
