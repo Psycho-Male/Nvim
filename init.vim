@@ -21,8 +21,8 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'sharkdp/fd'
 
 "https://github.com/hrsh7th/nvim-cmp
-Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/cmp-nvim-lsp'
+"Plug 'neovim/nvim-lspconfig'
+"Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/nvim-cmp'
@@ -85,6 +85,11 @@ EOF
 "https://github.com/hrsh7th/nvim-cmp
 set completeopt=menu,menuone,noselect
 lua <<EOF
+require('cmp').setup({
+  sources = {
+    { name = 'buffer' },
+  },
+})
 --require("cmp_git").setup()
   -- Setup nvim-cmp.
   local cmp = require('cmp')
@@ -112,7 +117,6 @@ lua <<EOF
     }),
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
-      { name = 'cmp-buffer' },
       { name = 'vsnip' }, -- For vsnip users.
     }, {
       { name = 'buffer' },
@@ -509,7 +513,8 @@ command! -nargs=+ Vrepyy
     nmap <leader>str a={ofunc:function(){ja,<ESC>2kI
     nmap dq df_
     nmap dQ dt_
-    nmap Q  :E %:h../..<CR>
+    nmap E  :E %:h../..<CR>
+    nmap Q  :q<CR>
     nmap <leader>drw idraw_sprite(sprite_index,image_index,x,y);<ESC>
     nmap <leader>dre idraw_sprite_ext(sprite_index,image_index,x,y,image_xscale,image_yscale,image_angle,image_blend,image_alpha);<ESC>
     nmap <leader>gmf k^wvt(yolive_name="<C-R>"";<ESC>
