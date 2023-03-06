@@ -53,8 +53,12 @@ Plug 'kelly-lin/telescope-ag'
 "https://github.com/mtth/scratch.vim
 Plug 'mtth/scratch.vim'
 
+"https://github.com/skywind3000/asyncrun.vim
+Plug 'skywind3000/asyncrun.vim'
+
 call plug#end()
 
+let g:asyncrun_open=10
 lua <<EOF
 require('lualine').setup {
     sections = {
@@ -329,20 +333,21 @@ command! -nargs=+ Vrepyy
 "Mappings                                                                                    ||
 "--------------------------------------------------------------------------------------------//
     "inoremap ( ()<LEFT>
+    "inoremap <C-> <SPACE>{<CR>}i else {<CR>}<ESC> {
     "inoremap " ""<LEFT>
     "inoremap [ []<LEFT>
+
+    inoremap <M-'> ""<LEFT>
     inoremap {  {<CR>}<ESC><UP>
     inoremap <C-S-CR> {}<LEFT>
     inoremap <M-[> []<LEFT>
-    inoremap <M-'> ""<LEFT>
     inoremap <C-CR>  {<CR>}else{<CR>}<ESC><UP><UP>
     inoremap <S-CR>  {<CR>}<ESC>O
     inoremap <C-SPACE> <TAB>=
     inoremap <S-SPACE> _
-    "inoremap <C-> <SPACE>{<CR>}i else {<CR>}<ESC> {
     inoremap <S-ESC> <ESC>:w<CR>
     map <C-o> i/*<ESC>
-    map <C-c> a*/<ESC>
+    map <C-c> cclose
     map <C-s> :setlocal spell!<cr>
     map <S-k> <Nop>
     map mm :nohl<ENTER>
@@ -353,20 +358,26 @@ command! -nargs=+ Vrepyy
     map <M-u> [z
     map <M-d> ]z
     map <leader>ti i["+string(i)+"]<ESC>
+    "
 "--------------------------------------------------------------------------------------------\\
 "Normal maps                                                                                 ||
 "--------------------------------------------------------------------------------------------//
     "nnoremap <Left>  :expand("%:p:h")<TAB><CR>
     "nnoremap <Right> :expand("%:p:h")<S-TAB><CR>
+    nnoremap <F5> :AsyncRun run.bat<CR>
+    nnoremap <F4> :AsyncStop 
     nnoremap <leader>vv :execute "Ack! " expand("<cword>")<CR>
     nnoremap <leader>vg :execute "Ack! -G .gml " expand("<cword>")<CR>
     nnoremap <leader>vy :execute "Ack! -G .yy " expand("<cword>")<CR>
     nnoremap <leader>aa :Ack! 
     nnoremap <leader>ag :Ack! -G .gml 
     nnoremap <leader>ay :Ack! -G .yy 
-    nnoremap <leader>gff :e scripts\<c-r><c-w>\<c-r><c-w>.gml<CR>
-    nnoremap <leader>gfv :vs scripts\<c-r><c-w>\<c-r><c-w>.gml<CR>
-    nnoremap <leader>gfs :sp scripts\<c-r><c-w>\<c-r><c-w>.gml<CR>
+    nnoremap <leader>gsf :e scripts\<c-r><c-w>\<c-r><c-w>.gml<CR>
+    nnoremap <leader>gsv :vs scripts\<c-r><c-w>\<c-r><c-w>.gml<CR>
+    nnoremap <leader>gss :sp scripts\<c-r><c-w>\<c-r><c-w>.gml<CR>
+    nnoremap <leader>gof :E objects\<c-r><c-w><CR>
+    nnoremap <leader>gov :vs<CR>:E objects\<c-r><c-w>\<c-r><c-w>.gml<CR>
+    nnoremap <leader>gos :sp<CR>:E objects\<c-r><c-w>\<c-r><c-w>.gml<CR>
     nnoremap <Space> @
     nnoremap <C-J> <C-W><C-J>
     nnoremap <C-H> <C-W><C-H>
