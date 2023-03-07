@@ -346,8 +346,8 @@ command! -nargs=+ Vrepyy
     inoremap <C-SPACE> <TAB>=
     inoremap <S-SPACE> _
     inoremap <S-ESC> <ESC>:w<CR>
-    map <C-o> i/*<ESC>
-    map <C-c> cclose
+    map <C-o> :copen<CR>
+    map <C-c> :cclose<CR>
     map <C-s> :setlocal spell!<cr>
     map <S-k> <Nop>
     map mm :nohl<ENTER>
@@ -365,7 +365,7 @@ command! -nargs=+ Vrepyy
     "nnoremap <Left>  :expand("%:p:h")<TAB><CR>
     "nnoremap <Right> :expand("%:p:h")<S-TAB><CR>
     nnoremap <F5> :AsyncRun run.bat<CR>
-    nnoremap <F4> :AsyncStop 
+    nnoremap <F4> :AsyncStop<CR>
     nnoremap <leader>vv :execute "Ack! " expand("<cword>")<CR>
     nnoremap <leader>vg :execute "Ack! -G .gml " expand("<cword>")<CR>
     nnoremap <leader>vy :execute "Ack! -G .yy " expand("<cword>")<CR>
@@ -396,11 +396,6 @@ command! -nargs=+ Vrepyy
     nmap <leader>/f  /function 
     nmap <leader>ltb b:let timer=timer_start(500,'UpdateFile',{'repeat':-1})<CR>
     nmap <leader>lte :call timer_stopall()<CR>
-    nmap <leader>eko1 :call SetLog1()<CR>
-    nmap <leader>eko2 :call SetLog2()<CR>
-    nmap <leader>eko3 :call SetLog3()<CR>
-    nmap <leader>eko4 :call SetLog4()<CR>
-    nmap <leader>eko5 :call SetLog5()<CR>
     nmap <leader>ogml :term ++curwin datafiles\Gmlive\gmlive-server.exe<CR>
     nmap + <C-w>+
     nmap - <C-w>-
@@ -609,6 +604,7 @@ endfunc
 command! -nargs=1 Log :call Log(<q-args>)
 command! -nargs=1 VLog :call VLog(<q-args>)
 command! -nargs=1 SLog :call SLog(<q-args>)
+command! -nargs=1 GMLive :call GMLive(<q-args>)
 func VLog(name)
     let path=""
     if isdirectory("C:/Users/Psy")
@@ -643,15 +639,14 @@ func Log(name)
     let timer=timer_start(500,'UpdateFile',{'repeat':-1})
     call timer_start(500,function('s:checktime'),{'repeat':-1})
 endfunc
-
-func SetLog1()
-    call Log("Kingdom_Lost_Reborn")
-endfunc
-func SetLog2()
-    call Log("Kalyzmyr")
-endfunc
-func SetLog3()
-    Log("Dekamara")
+func GMLive(name)
+    let path=""
+    if isdirectory("C:/Users/Psy")
+        let path="C:/Users/Psy/Appdata/Roaming/" .. fnameescape(a:name) .."/output.log"
+    else
+        let path="C:/Users/Manko/Appdata/Roaming/" .. fnameescape(a:name) .. "/output.log"
+    end
+    execute("AsyncRun M:/GameMakerProjects/" .. a:name .. "/datafiles/GMLive/gmlive-server.exe")
 endfunc
 
 "Buffer command taken from: https://vim.fandom.com/wiki/Easier_buffer_switching
