@@ -21,8 +21,8 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'sharkdp/fd'
 
 "https://github.com/hrsh7th/nvim-cmp
-Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/cmp-nvim-lsp'
+"Plug 'neovim/nvim-lspconfig'
+"Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/nvim-cmp'
@@ -50,8 +50,15 @@ Plug 'kyazdani42/nvim-web-devicons'
 "https://github.com/kelly-lin/telescope-ag 
 Plug 'kelly-lin/telescope-ag'
 
+"https://github.com/mtth/scratch.vim
+Plug 'mtth/scratch.vim'
+
+"https://github.com/skywind3000/asyncrun.vim
+Plug 'skywind3000/asyncrun.vim'
+
 call plug#end()
 
+let g:asyncrun_open=10
 lua <<EOF
 require('lualine').setup {
     sections = {
@@ -82,6 +89,11 @@ EOF
 "https://github.com/hrsh7th/nvim-cmp
 set completeopt=menu,menuone,noselect
 lua <<EOF
+require('cmp').setup({
+  sources = {
+    { name = 'buffer' },
+  },
+})
 --require("cmp_git").setup()
   -- Setup nvim-cmp.
   local cmp = require('cmp')
@@ -109,7 +121,6 @@ lua <<EOF
     }),
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
-      { name = 'cmp-buffer' },
       { name = 'vsnip' }, -- For vsnip users.
     }, {
       { name = 'buffer' },
@@ -322,20 +333,21 @@ command! -nargs=+ Vrepyy
 "Mappings                                                                                    ||
 "--------------------------------------------------------------------------------------------//
     "inoremap ( ()<LEFT>
+    "inoremap <C-> <SPACE>{<CR>}i else {<CR>}<ESC> {
     "inoremap " ""<LEFT>
     "inoremap [ []<LEFT>
+
+    inoremap <M-'> ""<LEFT>
     inoremap {  {<CR>}<ESC><UP>
     inoremap <C-S-CR> {}<LEFT>
     inoremap <M-[> []<LEFT>
-    inoremap <M-'> ""<LEFT>
     inoremap <C-CR>  {<CR>}else{<CR>}<ESC><UP><UP>
     inoremap <S-CR>  {<CR>}<ESC>O
     inoremap <C-SPACE> <TAB>=
     inoremap <S-SPACE> _
-    "inoremap <C-> <SPACE>{<CR>}i else {<CR>}<ESC> {
     inoremap <S-ESC> <ESC>:w<CR>
-    map <C-o> i/*<ESC>
-    map <C-c> a*/<ESC>
+    map <C-o> :copen<CR>
+    map <C-c> :cclose<CR>
     map <C-s> :setlocal spell!<cr>
     map <S-k> <Nop>
     map mm :nohl<ENTER>
@@ -346,20 +358,26 @@ command! -nargs=+ Vrepyy
     map <M-u> [z
     map <M-d> ]z
     map <leader>ti i["+string(i)+"]<ESC>
+    "
 "--------------------------------------------------------------------------------------------\\
 "Normal maps                                                                                 ||
 "--------------------------------------------------------------------------------------------//
     "nnoremap <Left>  :expand("%:p:h")<TAB><CR>
     "nnoremap <Right> :expand("%:p:h")<S-TAB><CR>
+    nnoremap <F5> :AsyncRun run.bat<CR>
+    nnoremap <F4> :AsyncStop<CR>
     nnoremap <leader>vv :execute "Ack! " expand("<cword>")<CR>
     nnoremap <leader>vg :execute "Ack! -G .gml " expand("<cword>")<CR>
     nnoremap <leader>vy :execute "Ack! -G .yy " expand("<cword>")<CR>
     nnoremap <leader>aa :Ack! 
     nnoremap <leader>ag :Ack! -G .gml 
     nnoremap <leader>ay :Ack! -G .yy 
-    nnoremap <leader>gff :e scripts\<c-r><c-w>\<c-r><c-w>.gml<CR>
-    nnoremap <leader>gfv :vs scripts\<c-r><c-w>\<c-r><c-w>.gml<CR>
-    nnoremap <leader>gfs :sp scripts\<c-r><c-w>\<c-r><c-w>.gml<CR>
+    nnoremap <leader>gsf :e scripts\<c-r><c-w>\<c-r><c-w>.gml<CR>
+    nnoremap <leader>gsv :vs scripts\<c-r><c-w>\<c-r><c-w>.gml<CR>
+    nnoremap <leader>gss :sp scripts\<c-r><c-w>\<c-r><c-w>.gml<CR>
+    nnoremap <leader>gof :E objects\<c-r><c-w><CR>
+    nnoremap <leader>gov :vs<CR>:E objects\<c-r><c-w>\<c-r><c-w>.gml<CR>
+    nnoremap <leader>gos :sp<CR>:E objects\<c-r><c-w>\<c-r><c-w>.gml<CR>
     nnoremap <Space> @
     nnoremap <C-J> <C-W><C-J>
     nnoremap <C-H> <C-W><C-H>
@@ -378,11 +396,6 @@ command! -nargs=+ Vrepyy
     nmap <leader>/f  /function 
     nmap <leader>ltb b:let timer=timer_start(500,'UpdateFile',{'repeat':-1})<CR>
     nmap <leader>lte :call timer_stopall()<CR>
-    nmap <leader>eko1 :call SetLog1()<CR>
-    nmap <leader>eko2 :call SetLog2()<CR>
-    nmap <leader>eko3 :call SetLog3()<CR>
-    nmap <leader>eko4 :call SetLog4()<CR>
-    nmap <leader>eko5 :call SetLog5()<CR>
     nmap <leader>ogml :term ++curwin datafiles\Gmlive\gmlive-server.exe<CR>
     nmap + <C-w>+
     nmap - <C-w>-
@@ -506,7 +519,8 @@ command! -nargs=+ Vrepyy
     nmap <leader>str a={ofunc:function(){ja,<ESC>2kI
     nmap dq df_
     nmap dQ dt_
-    nmap Q  :E %:h../..<CR>
+    nmap E  :E %:h../..<CR>
+    nmap Q  :q<CR>
     nmap <leader>drw idraw_sprite(sprite_index,image_index,x,y);<ESC>
     nmap <leader>dre idraw_sprite_ext(sprite_index,image_index,x,y,image_xscale,image_yscale,image_angle,image_blend,image_alpha);<ESC>
     nmap <leader>gmf k^wvt(yolive_name="<C-R>"";<ESC>
@@ -527,6 +541,7 @@ command! -nargs=+ Vrepyy
     nnoremap <leader>cdk <cmd>cd Kalyzmyr<cr><cmd>cd<cr>
     nnoremap <leader>cdd <cmd>cd Dekamara<cr><cmd>cd<cr>
     nnoremap <leader>cdl <cmd>cd Kingdom Lost Reborn<cr><cmd>cd<cr>
+    "nnoremap <leader>go  :execute "e objects/"expand("<cword>")"/"expand("<cword>")".gml"<CR>
 "-------------------------------------------------------------------------------------------\\
 "Visual maps                                                                                ||
 "-------------------------------------------------------------------------------------------//
@@ -589,6 +604,7 @@ endfunc
 command! -nargs=1 Log :call Log(<q-args>)
 command! -nargs=1 VLog :call VLog(<q-args>)
 command! -nargs=1 SLog :call SLog(<q-args>)
+command! -nargs=1 GMLive :call GMLive(<q-args>)
 func VLog(name)
     let path=""
     if isdirectory("C:/Users/Psy")
@@ -623,15 +639,14 @@ func Log(name)
     let timer=timer_start(500,'UpdateFile',{'repeat':-1})
     call timer_start(500,function('s:checktime'),{'repeat':-1})
 endfunc
-
-func SetLog1()
-    call Log("Kingdom_Lost_Reborn")
-endfunc
-func SetLog2()
-    call Log("Kalyzmyr")
-endfunc
-func SetLog3()
-    Log("Dekamara")
+func GMLive(name)
+    let path=""
+    if isdirectory("C:/Users/Psy")
+        let path="C:/Users/Psy/Appdata/Roaming/" .. fnameescape(a:name) .."/output.log"
+    else
+        let path="C:/Users/Manko/Appdata/Roaming/" .. fnameescape(a:name) .. "/output.log"
+    end
+    execute("AsyncRun M:/GameMakerProjects/" .. a:name .. "/datafiles/GMLive/gmlive-server.exe")
 endfunc
 
 "Buffer command taken from: https://vim.fandom.com/wiki/Easier_buffer_switching
