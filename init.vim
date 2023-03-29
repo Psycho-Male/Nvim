@@ -59,6 +59,8 @@ Plug 'skywind3000/asyncrun.vim'
 call plug#end()
 
 let g:asyncrun_open=10
+"See: https://github.com/skywind3000/asyncrun.vim/wiki/Playing-Sound 
+"let g:asyncrun_exit = "silent call system('afplay ~/.vim/notify.wav &')"
 lua <<EOF
 require('lualine').setup {
     sections = {
@@ -364,7 +366,8 @@ command! -nargs=+ Vrepyy
 "--------------------------------------------------------------------------------------------//
     "nnoremap <Left>  :expand("%:p:h")<TAB><CR>
     "nnoremap <Right> :expand("%:p:h")<S-TAB><CR>
-    nnoremap <F5> :AsyncRun run.bat<CR>
+    nnoremap <F5> :AsyncStop<CR>\|:AsyncRun run.bat<CR>
+    nnoremap <F6> :AsyncRun run.bat 
     nnoremap <F4> :AsyncStop<CR>
     nnoremap <leader>vv :execute "Ack! " expand("<cword>")<CR>
     nnoremap <leader>vg :execute "Ack! -G .gml " expand("<cword>")<CR>
@@ -409,7 +412,6 @@ command! -nargs=+ Vrepyy
     nmap <leader>ek :e C:\Users\Psy\Appdata\Roaming\
     nmap <silent> <leader>oo :only<CR>
     "nmap gx gf<CR>:vs<CR>:e #<CR>
-    nmap <F6> :w<ENTER>:!%<ENTER>
     nmap <F2> :Syndo filetype detect<CR>
     nmap <F3> :let t:mytablabel = ''<Left>
     "GAMEMAKER MACROS
@@ -519,7 +521,7 @@ command! -nargs=+ Vrepyy
     nmap <leader>str a={ofunc:function(){ja,<ESC>2kI
     nmap dq df_
     nmap dQ dt_
-    nmap E  :E %:h../..<CR>
+    nmap <leader>E  :E %:h../..<CR>
     nmap Q  :q<CR>
     nmap <leader>drw idraw_sprite(sprite_index,image_index,x,y);<ESC>
     nmap <leader>dre idraw_sprite_ext(sprite_index,image_index,x,y,image_xscale,image_yscale,image_angle,image_blend,image_alpha);<ESC>
@@ -538,10 +540,10 @@ command! -nargs=+ Vrepyy
     nnoremap <leader>fmm <cmd>set foldmethod=marker<cr>
     nnoremap <leader>fmi <cmd>set foldmethod=indent<cr>
     nnoremap <leader>fme <cmd>set foldmethod=expr<cr>
-    nnoremap <leader>cdk <cmd>cd Kalyzmyr<cr><cmd>cd<cr>
-    nnoremap <leader>cdd <cmd>cd Dekamara<cr><cmd>cd<cr>
-    nnoremap <leader>cdl <cmd>cd Kingdom Lost Reborn<cr><cmd>cd<cr>
     "nnoremap <leader>go  :execute "e objects/"expand("<cword>")"/"expand("<cword>")".gml"<CR>
+
+    nnoremap <leader>arr :AsyncRun 
+    nnoremap <leader>arg :AsyncRun git 
 "-------------------------------------------------------------------------------------------\\
 "Visual maps                                                                                ||
 "-------------------------------------------------------------------------------------------//
@@ -643,10 +645,11 @@ func GMLive(name)
     let path=""
     if isdirectory("C:/Users/Psy")
         let path="C:/Users/Psy/Appdata/Roaming/" .. fnameescape(a:name) .."/output.log"
+        execute("AsyncRun M:/GameMakerProjects/" .. a:name .. "/datafiles/GMLive/gmlive-server.exe")
     else
         let path="C:/Users/Manko/Appdata/Roaming/" .. fnameescape(a:name) .. "/output.log"
+        execute("AsyncRun C:/Users/Manko/Documents/GameMakerStudio2/" .. a:name .. "/datafiles/GMLive/gmlive-server.exe")
     end
-    execute("AsyncRun M:/GameMakerProjects/" .. a:name .. "/datafiles/GMLive/gmlive-server.exe")
 endfunc
 
 "Buffer command taken from: https://vim.fandom.com/wiki/Easier_buffer_switching
