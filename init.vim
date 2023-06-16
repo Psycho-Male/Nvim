@@ -58,7 +58,7 @@ Plug 'skywind3000/asyncrun.vim'
 
 call plug#end()
 
-let g:asyncrun_open=10
+let g:asyncrun_open=2
 "See: https://github.com/skywind3000/asyncrun.vim/wiki/Playing-Sound 
 "let g:asyncrun_exit = "silent call system('afplay ~/.vim/notify.wav &')"
 lua <<EOF
@@ -526,6 +526,7 @@ command! -nargs=+ Vrepyy
     nmap <leader>drw idraw_sprite(sprite_index,image_index,x,y);<ESC>
     nmap <leader>dre idraw_sprite_ext(sprite_index,image_index,x,y,image_xscale,image_yscale,image_angle,image_blend,image_alpha);<ESC>
     nmap <leader>gmf k^wvt(yolive_name="<C-R>"";<ESC>
+    nmap <leader>gmm k^veyolive_name="<C-R>"";<ESC>
     nmap <leader>gml Oif(live_call()) return live_result;<ESC>
     " Find files using Telescope command-line sugar.
     nnoremap <leader>ff <cmd>Telescope find_files<cr>
@@ -664,3 +665,18 @@ command -nargs=? -bang Buffer if <q-args> != '' | exe 'buffer '.<q-args> | else 
 "endif
 let g:ackprg='ag --nogroup --nocolor --column'
 au FocusGained,BufEnter * :silent! !
+"
+" Background colors for active vs inactive windows
+hi ActiveWindow guibg=#000000
+hi InactiveWindow guibg=#091114
+
+" Call method on window enter
+augroup WindowManagement
+  autocmd!
+  autocmd WinEnter * call Handle_Win_Enter()
+augroup END
+
+" Change highlight group of active/inactive windows
+function! Handle_Win_Enter()
+  setlocal winhighlight=Normal:ActiveWindow,NormalNC:InactiveWindow
+endfunction

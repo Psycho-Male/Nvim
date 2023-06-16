@@ -13,8 +13,8 @@ let g:colors_name = "psycho"
 let s:fg            = {"gui": "#90A0B0", "cterm": "0"}
 let s:bg            = {"gui": "#091114", "cterm": "1"}
 let s:bg_l1         = {"gui": "#182e36", "cterm": "0"}
-let s:curc          = {"gui": "#301a2c", "cterm": "0"}
-let s:curl          = {"gui": "#59124c", "cterm": "0"}
+let s:curc          = {"gui": "#2e2a3d", "cterm": "0"}
+let s:curl          = {"gui": "#004057", "cterm": "0"}
 let s:dark          = {"gui": "#585878", "cterm": "0"}
 let s:black         = {"gui": "#000000", "cterm": "1"}
 let s:red           = {"gui": "#F00000", "cterm": "0"}
@@ -73,7 +73,7 @@ call s:h("SpecialKey",      {"fg": s:purple                                 , "f
 call s:h("StatusLine",      {"fg": s:teal           , "bg": s:bg_l1         , "format": "none"})
 call s:h("StatusLineNC",    {"fg": s:blue           , "bg": s:bg_l1         , "format": "none"})
 call s:h("Handler",         {"fg": s:green                                  , "format": "none"})
-call s:h("Visual",          {"fg": s:purple         , "bg": s:black         , "format": "none"})
+call s:h("Visual",          {"fg": s:purple         , "bg": s:bg            , "format": "none"})
 call s:h("WarningMsg",      {"fg": s:black          , "bg": s:yellow        , "format": "none"})
 call s:h("Identifier",      {"fg": s:green                                  , "format": "none"})
 call s:h("Include",         {"fg": s:green                                  , "format": "none"})

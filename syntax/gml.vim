@@ -31,9 +31,9 @@ syn match gmlLocal      /\<.\>/
 syn keyword gmlTodo contained TODO FIXME NOTE XXX SEE
 syn keyword gmlType var globalvar static constructor new toString delete
 syn keyword gmlBoolean true false
-syn keyword gmlEndMacro   exit break return continue 
+syn keyword gmlEndMacro   exit break return continue
 syn keyword gmlKeyword self other all noone undefined global fail success undef
-syn keyword gmlBuiltinGlobal score health lives async_load
+syn keyword gmlBuiltinGlobal score health lives async_load _GM_LINE_ _GM_FUNCTION_ _GM_FILE_
 syn keyword gmlExceptionHandling try catch finally
 
 syn match gmlBuiltinFunction '\v<is_array\ze\_s*\('
