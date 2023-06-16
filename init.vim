@@ -15,8 +15,8 @@
 call plug#begin(stdpath("config") . "/plug")
 
 "https://github.com/nvim-telescope/telescope.nvim
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
+"Plug 'nvim-lua/plenary.nvim'
+"Plug 'nvim-telescope/telescope.nvim'
 
 Plug 'sharkdp/fd'
 
@@ -665,7 +665,8 @@ command -nargs=? -bang Buffer if <q-args> != '' | exe 'buffer '.<q-args> | else 
 "endif
 let g:ackprg='ag --nogroup --nocolor --column'
 au FocusGained,BufEnter * :silent! !
-"
+
+"Tint Inacvite Windows=====================================================================\\
 " Background colors for active vs inactive windows
 hi ActiveWindow guibg=#000000
 hi InactiveWindow guibg=#091114
@@ -680,3 +681,4 @@ augroup END
 function! Handle_Win_Enter()
   setlocal winhighlight=Normal:ActiveWindow,NormalNC:InactiveWindow
 endfunction
+"==========================================================================================//
