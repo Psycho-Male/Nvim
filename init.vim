@@ -21,12 +21,12 @@ call plug#begin(stdpath("config") . "/plug")
 Plug 'sharkdp/fd'
 
 "https://github.com/hrsh7th/nvim-cmp
-"Plug 'neovim/nvim-lspconfig'
-"Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/nvim-cmp'
-"
+
 "https://github.com/hrsh7th/vim-vsnip
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
@@ -132,7 +132,7 @@ require('cmp').setup({
   -- Set configuration for specific filetype.
   cmp.setup.filetype('gitcommit', {
     sources = cmp.config.sources({
-      { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+      { name = 'git' }, -- You can specify the `git` source if you were installed it.
     }, {
       { name = 'buffer' },
     })
@@ -157,11 +157,11 @@ require('cmp').setup({
   --})
 
   -- Setup lspconfig.
-  --local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+  -- local capabilities = require('cmp_nvim_lsp').default_capabilities()
   -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  --require('lspconfig')['gml-tools-langserver'].setup {
-  --  capabilities = capabilities
-  --}
+  -- require('lspconfig')['GameMakerDiscord/gml-tools-langserver'].setup {
+  --   capabilities = capabilities
+  -- }
 EOF
 "------------------------------------------------------------------------------------------//
 ":se backup? backupdir? backupext?
@@ -668,8 +668,8 @@ au FocusGained,BufEnter * :silent! !
 
 "Tint Inacvite Windows=====================================================================\\
 " Background colors for active vs inactive windows
-hi ActiveWindow guibg=#000000
-hi InactiveWindow guibg=#091114
+hi ActiveWindow guibg=#091114
+hi InactiveWindow guibg=#000000
 
 " Call method on window enter
 augroup WindowManagement
