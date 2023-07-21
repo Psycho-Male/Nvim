@@ -58,7 +58,7 @@ Plug 'skywind3000/asyncrun.vim'
 
 call plug#end()
 
-let g:asyncrun_open=2
+let g:asyncrun_open=5
 "See: https://github.com/skywind3000/asyncrun.vim/wiki/Playing-Sound 
 "let g:asyncrun_exit = "silent call system('afplay ~/.vim/notify.wav &')"
 lua <<EOF
