@@ -608,6 +608,7 @@ command! -nargs=1 Log :call Log(<q-args>)
 command! -nargs=1 VLog :call VLog(<q-args>)
 command! -nargs=1 SLog :call SLog(<q-args>)
 command! -nargs=1 GMLive :call GMLive(<q-args>)
+command! -nargs=1 GMLog :call GMLog(<q-args>)
 func VLog(name)
     let path=""
     if isdirectory("C:/Users/Psy")
@@ -644,6 +645,32 @@ func Log(name)
 endfunc
 func GMLive(name)
     let path=""
+    if isdirectory("C:/Users/Psy")
+        let path="C:/Users/Psy/Appdata/Roaming/" .. fnameescape(a:name) .."/output.log"
+        execute("AsyncRun M:/GameMakerProjects/" .. a:name .. "/datafiles/GMLive/gmlive-server.exe")
+    else
+        let path="C:/Users/Manko/Appdata/Roaming/" .. fnameescape(a:name) .. "/output.log"
+        execute("AsyncRun C:/Users/Manko/Documents/GameMakerStudio2/" .. a:name .. "/datafiles/GMLive/gmlive-server.exe")
+    end
+endfunc
+
+func GMLog(name)
+    let path=""
+    if isdirectory("C:/Users/Psy")
+        let path="C:/Users/Psy/Appdata/Roaming/" .. fnameescape(a:name) .."/output.log"
+    else
+        let path="C:/Users/Manko/Appdata/Roaming/" .. fnameescape(a:name) .. "/output.log"
+    end
+    set autoread
+    syntax=logger
+    set concealcursor=n
+    set nocuc
+    set nocul
+    execute "view ".path
+    au CursorHold * checktime
+    let timer=timer_start(500,'UpdateFile',{'repeat':-1})
+    call timer_start(500,function('s:checktime'),{'repeat':-1})
+
     if isdirectory("C:/Users/Psy")
         let path="C:/Users/Psy/Appdata/Roaming/" .. fnameescape(a:name) .."/output.log"
         execute("AsyncRun M:/GameMakerProjects/" .. a:name .. "/datafiles/GMLive/gmlive-server.exe")
