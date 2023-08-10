@@ -114,6 +114,7 @@ call s:h("TagListFileName", {"fg": s:black          , "bg": s:teal          , "f
 call s:h("LocalVar",        {"fg": s:blueish                                , "format": "none"})
 call s:h("EndMacro",        {"fg": s:orange                                 , "format": "italic"})
 call s:h("MatchParen",      {"fg": s:orange         , "bg": s:bg            , "format": "none"})
+call s:h("Object",          {"fg": s:red                                    , "format": "bold"})
 
 call s:h("LoglevelInfo",    {"fg": s:purple                                                         , "format": "bold"})
 call s:h("LoglevelDebug",   {"fg": s:green                                                          , "format": "bold"})
