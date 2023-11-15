@@ -41,6 +41,7 @@ vim.o.number=true
 vim.o.shiftwidth=4
 vim.o.cursorline=true
 vim.o.cursorcolumn=true
+vim.o.splitright=true -- Doesn't work
 --vim.opt.notitle=true
 vim.opt.so=10 --Set cursor offset
 vim.opt.incsearch=true

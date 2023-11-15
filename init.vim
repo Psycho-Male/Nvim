@@ -307,7 +307,7 @@ endfunction
     "windows toolbar
     if has("gui_running")
         set guioptions-=m
-        set guioptions-=T
+ r       set guioptions-=T
         set guioptions-=r
         set guioptions-=L
         set t_Co=256 "256 color
@@ -545,6 +545,10 @@ command! -nargs=+ Vrepyy
 
     nnoremap <leader>arr :AsyncRun 
     nnoremap <leader>arg :AsyncRun git 
+    nnoremap <leader>cpp :AsyncRun g++ 
+    nnoremap <leader>cpa :AsyncRun g++ -Wall -Weffc++ -Wextra -Wconversion -Wsign-conversion -pedantic-errors -Werror -o %:t:r %:t
+    nnoremap <leader>cpr :AsyncRun %:t:r.exe<CR>
+    nnoremap <f7> :AsyncRun g++ -Wall -Weffc++ -Wextra -Wconversion -Wsign-conversion -pedantic-errors -Werror -o %:t:r %:t<CR>
 "-------------------------------------------------------------------------------------------\\
 "Visual maps                                                                                ||
 "-------------------------------------------------------------------------------------------//
