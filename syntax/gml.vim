@@ -24,6 +24,7 @@ syn match gmlGlobal     /\v<\u\u\w+/
 syn match gmlLocal      /\(\<_\w\+\>\)/
 syn match gmlRegion     '\v#region.*'
 syn match gmlRegion     '\v#endregion'
+syn match gmlObject     '\<+.*\.'
 syn region paren        start="{" end="}" transparent
 "Not working
 "syn match gmlLocal      /\<[i-k-j-l]\C\>/
@@ -51,7 +52,7 @@ syn match gmlDSType '\v<ds_type_(map|list|stack|grid|queue|priority)>'
 syn match gmlDSFunction '\v<ds_(exists|set_precision|exists_destroy)>'
 syn match gmlDSFunction '\v<ds_(grid|list|map|queue|stack|priority)_(create|destroy|clear)>'
 
-syn keyword gmlArrayFunction array_create array_length is_array array_set array_get array_copy array_equals method
+syn keyword gmlArrayFunction array_create array_length is_array array_set array_get array_copy array_equals method array_push array_pop array_shift array_insert array_delete array_get_index array_contains array_contains_ext array_sort array_reverse array_shuffle array_resize array_first array_last array_create_ext array_filter_ext array_map_ext array_unique_ext array_reverse_ext array_shuffle_ext
 
 syn keyword gmlDSGridFunction ds_grid_create ds_grid_destroy ds_grid_width ds_grid_height ds_grid_resize ds_grid_clear ds_grid_set ds_grid_set_disk ds_grid_set_grid_region ds_grid_set_region ds_grid_shuffle ds_grid_sort ds_grid_get ds_grid_get_max ds_grid_get_mean ds_grid_get_min ds_grid_get_sum ds_grid_get_disk_max ds_grid_get_disk_mean ds_grid_get_disk_min ds_grid_get_disk_sum ds_grid_add ds_grid_add_region ds_grid_add_disk ds_grid_add_grid_region ds_grid_multiply ds_grid_multiply_disk ds_grid_multiply_region ds_grid_multiply_grid_region ds_grid_value_exists ds_grid_value_disk_exists ds_grid_value_x ds_grid_value_y ds_grid_value_disk_x ds_grid_value_disk_y ds_grid_copy ds_grid_read ds_grid_write
 
@@ -71,7 +72,7 @@ syn keyword gmlBufferFunction buffer_create buffer_create_from_vertex_buffer buf
 
 syn keyword gmlCloudFunction cloud_synchronise cloud_string_save cloud_file_save
 
-syn keyword gmlTimeFunction date_set_timezone date_get_timezone current_time current_second current_minute current_hour current_day current_weekday current_month current_year date_create_datetime date_current_datetime date_compare_date date_compare_datetime date_compare_time date_valid_datetime date_date_of date_time_of date_is_today date_leap_year date_date_string date_datetime_string date_time_string date_second_span date_minute_span date_hour_span date_day_span date_week_span date_month_span date_year_span date_days_in_month date_days_in_year date_get_second date_get_minute date_get_hour date_get_day date_get_weekday date_get_week date_get_month date_get_year date_get_second_of_year date_get_minute_of_year date_get_hour_of_year date_get_day_of_year date_inc_second date_inc_minute date_inc_hour date_inc_day date_inc_week date_inc_month date_inc_year get_timer delta_time
+syn keyword gmlTimeFunction date_set_timezone date_get_timezone current_time current_second current_minute current_hour current_day current_weekday current_month current_year date_create_datetime date_current_datetime date_compare_date date_compare_datetime date_compare_time date_valid_datetime date_date_of date_time_of date_is_today date_leap_year date_date_string date_datetime_string date_time_string date_second_span date_minute_span date_hour_span date_day_span date_week_span date_month_span date_year_span date_days_in_month date_days_in_year date_get_second date_get_minute date_get_hour date_get_day date_get_weekday date_get_week date_get_month date_get_year date_get_second_of_year date_get_minute_of_year date_get_hour_of_year date_get_day_of_year date_inc_second date_inc_minute date_inc_hour date_inc_day date_inc_week date_inc_month date_inc_year get_timer
 
 syn keyword gmlDebugFunction debug_mode get_integer get_string show_error show_message show_message_async show_question show_debug_message show_debug_overlay code_is_compiled fps fps_real debug_get_callstack trace trace_ext trace_pop trace_string trace_script trace_object trace_room trace_sprite trace_bool debug_trace debug_trace_object debug_trace_script debug_trace_room debug_trace_sprite debug_trace_bool debug_trace_string trace_error
 
@@ -89,7 +90,7 @@ syn keyword gmlTextFileFunction get_open_filename get_open_filename_ext get_save
 
 syn keyword gmlIniFileFunction ini_open ini_close ini_write_real ini_write_string ini_read_real ini_read_string ini_key_exists ini_section_exists ini_key_delete ini_section_delete ini_open_from_string file_text_open_read file_text_open_write file_text_open_append file_text_open_from_string file_text_read_real file_text_read_string file_text_readln file_text_write_real file_text_write_string file_text_writeln file_text_eoln file_text_eof file_text_close
 
-syn keyword gmlAssetFunction asset_get_index asset_get_type typeof asset_unknown asset_object asset_script asset_sprite asset_room asset_sound asset_tiles asset_path asset_font asset_timeline asset_shader tag_get_assets tag_get_asset_ids asset_get_tags asset_add_tags asset_remove_tags asset_has_tags asset_has_any_tag asset_clear_tags
+syn keyword gmlAssetFunction asset_get_index asset_get_type typeof asset_unknown asset_object asset_script asset_sprite asset_room asset_sound asset_tiles asset_path asset_font asset_timeline asset_shader tag_get_assets tag_get_asset_ids asset_get_tags asset_add_tags asset_remove_tags asset_has_tags asset_has_any_tag asset_clear_tags asset_sequence asset_particlesystem
 
 syn match gmlBackgroundFunction '\v<background_(index|visible|alpha|blend|x|y|foreground|hspeed|vspeed|htiled|vtiled|width|height|xscale|yscale|colour color|showcolour showcolor)'
 syn match gmlBackgroundFunction '\v<background_get_(name|width|height|texture|uvs)'
@@ -145,7 +146,7 @@ syn keyword gmlJoystickFunction joystick_exists joystick_name joystick_axes joys
 
 syn keyword gmlKeyboardConstant vk_nokey vk_anykey vk_left vk_right vk_up vk_down vk_enter vk_escape vk_space vk_shift vk_control vk_alt vk_backspace vk_tab vk_home vk_end vk_delete vk_insert vk_pageup vk_pagedown vk_pause vk_printscreen vk_multiply vk_divide vk_add vk_subtract vk_decimal keyboard_key
 
-syn keyword gmlConstant pointer_null null pointer_invalid NaN infinity pi
+syn keyword gmlConstant pointer_null null pointer_invalid NaN infinity pi delta_time fa_none fa_readonly fa_hidden fa_sysfile fa_volumeid fa_directory fa_archive
 
 syn match gmlKeyboardConstant 'vk_f[0-9]'
 syn match gmlKeyboardConstant 'vk_f1[0-2]'
@@ -186,7 +187,7 @@ syn keyword gmlPathFunction path_start path_end path_add path_add_point path_cha
 
 syn keyword gmlPathVariable path_index path_position path_positionprevious path_speed path_scale path_orientation path_endaction
 
-syn keyword gmlBuiltinInstanceFunction instance_change instance_copy instance_create_layer instance_create_depth instance_destroy instance_exists instance_find instance_furthest instance_nearest instance_number instance_place instance_position instance_id_get instance_exists_create instance_exists_destroy instance_position_list
+syn keyword gmlBuiltinInstanceFunction instance_change instance_copy instance_create_layer instance_create_depth instance_destroy instance_exists instance_find instance_furthest instance_nearest instance_number instance_place instance_position instance_id_get instance_exists_create instance_exists_destroy instance_position_list instance_place_list
 
 syn keyword gmlGlobalInstanceFunction instance_activate_all instance_activate_object instance_activate_region instance_deactivate_all instance_deactivate_object instance_deactivate_region
 
@@ -219,6 +220,8 @@ syn keyword gmlPhysicsJointConstant phy_joint_anchor_1_x phy_joint_anchor_2_x ph
 syn keyword gmlPhysicsVariable phy_active phy_angular_velocity phy_angular_damping phy_linear_velocity_x phy_linear_velocity_y phy_linear_damping phy_speed_x phy_speed_y phy_position_x phy_position_y phy_position_xprevious phy_position_yprevious phy_rotation phy_fixed_rotation phy_bullet phy_speed phy_com_x phy_com_y phy_dynamic phy_kinematic phy_inertia phy_mass phy_sleeping phy_collision_points phy_collision_x phy_collision_y phy_col_normal_x phy_col_normal_y
 
 syn keyword gmlPhysicsParticleFunction physics_particle_count physics_particle_group_count physics_particle_set_max_count physics_particle_set_radius physics_particle_set_density physics_particle_set_damping physics_particle_set_gravity_scale physics_particle_get_max_count physics_particle_get_radius physics_particle_get_density physics_particle_get_damping physics_particle_get_gravity_scale physics_particle_set_flags physics_particle_set_category_flags physics_particle_set_group_flags physics_particle_get_group_flags physics_particle_group_get_inertia physics_particle_group_get_centre_x physics_particle_group_get_centre_y physics_particle_group_get_vel_x physics_particle_group_get_vel_y physics_particle_group_get_ang_vel physics_particle_group_get_x physics_particle_group_get_y physics_particle_group_get_angle physics_particle_get_data physics_particle_get_data_particle physics_particle_group_get_data physics_particle_create physics_particle_group_begin physics_particle_group_circle physics_particle_group_box physics_particle_group_polygon physics_particle_group_add_point physics_particle_group_end physics_particle_group_join physics_particle_group_delete physics_particle_delete physics_particle_delete_region_circle physics_particle_delete_region_box physics_particle_delete_region_poly physics_particle_draw physics_particle_draw_ext 
+
+syn keyword gmlSequenceFunction sequence_exists sequence_create sequence_destroy sequence_get sequence_track_new sequence_keyframe_new sequence_keyframedata_new sequence_get_objects sequence_instance_override_object in_sequence
 
 syn keyword gmlPhysicsWorldFunction physics_world_create physics_world_gravity physics_world_update_iterations physics_world_update_speed physics_world_draw_debug physics_draw_debug physics_pause_enable
 
@@ -374,6 +377,7 @@ hi def link gmlLabel                        Label
 hi def link gmlDefine                       Macro
 hi def link gmlEndMacro                     EndMacro
 hi def link gmlRegion                       Region
+hi def link gmlObject                       Object
 hi def link paren                           gmlFunction
 hi def link parenCurly                      Conditional
 hi def link gmlBlendmodeConstant            Macro

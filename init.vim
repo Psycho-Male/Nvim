@@ -713,3 +713,5 @@ function! Handle_Win_Enter()
   setlocal winhighlight=Normal:ActiveWindow,NormalNC:InactiveWindow
 endfunction
 "==========================================================================================//
+"Disabllow netrw staying as active buffer
+let g:netrw_fastbrowse=0
