@@ -177,15 +177,16 @@ EOF
 "-------------------------------------------------------------------------------------------//
 "SETTERS-----------------------------------------------------------------------------------\\
 lua <<EOF
-if vim.fn.isdirectory("M:/GameMakerProjects") ~= 0 then
-    vim.opt.directory="M:/Programs/Vim/tmp"
-    vim.opt.backupdir="M:/Programs/Vim/tmp"
-    vim.opt.undodir  ="M:/Programs/Vim/tmp"
-    vim.fn.chdir("M:/GameMakerProjects")
-    --vim.fn.chdir("M:/GameMakerProjects/BlackRoad")
-    --vim.fn.chdir("M:/GameMakerProjects/Dekamara")
-    --vim.fn.chdir("M:/GameMakerProjects/Kingdom Lost Reborn")
-    --vim.fn.chdir("M:/GameMakerProjects/Kalyzmyr")
+if vim.fn.isdirectory("C:/Users/Administrator/Documents/GameMakerStudio2") ~= 0 then
+    vim.opt.directory="C:/tmp"
+    vim.opt.backupdir="C:/tmp"
+    vim.opt.undodir  ="C:/tmp"
+    vim.fn.chdir("C:/Users/Administrator/Documents/GameMakerStudio2")
+    --vim.fn.chdir("C:/Users/Administrator/Documents/GameMakerStudio2/BlackRoad")
+    --vim.fn.chdir("C:/Users/Administrator/Documents/GameMakerStudio2/Dekamara")
+    --vim.fn.chdir("C:/Users/Administrator/Documents/GameMakerStudio2/Kingdom-Lost")
+    --vim.fn.chdir("C:/Users/Administrator/Documents/GameMakerStudio2/Kingdom Lost Reborn")
+    --vim.fn.chdir("C:/Users/Administrator/Documents/GameMakerStudio2/Kalyzmyr")
 else
     vim.opt.directory="C:/tmp"
     vim.opt.backupdir="C:/tmp"
@@ -307,7 +308,7 @@ endfunction
     "windows toolbar
     if has("gui_running")
         set guioptions-=m
- r       set guioptions-=T
+        set guioptions-=T
         set guioptions-=r
         set guioptions-=L
         set t_Co=256 "256 color
@@ -592,8 +593,8 @@ func UpdateFile(timer)
 endfunc
 func SLog(name)
     let path=""
-    if isdirectory("C:/Users/Psy")
-        let path="C:/Users/Psy/Appdata/Roaming/" .. a:name .."/output.log"
+    if isdirectory("C:/Users/Administrator")
+        let path="C:/Users/Administrator/Appdata/Roaming/" .. a:name .."/output.log"
     else
         let path="C:/Users/Manko/Appdata/Roaming/" .. a:name .. "/output.log"
     end
@@ -615,8 +616,8 @@ command! -nargs=1 GMLive :call GMLive(<q-args>)
 command! -nargs=1 GMLog :call GMLog(<q-args>)
 func VLog(name)
     let path=""
-    if isdirectory("C:/Users/Psy")
-        let path="C:/Users/Psy/Appdata/Roaming/" .. fnameescape(a:name) .."/output.log"
+    if isdirectory("C:/Users/Administrator")
+        let path="C:/Users/Administrator/Appdata/Roaming/" .. fnameescape(a:name) .."/output.log"
     else
         let path="C:/Users/Manko/Appdata/Roaming/" .. fnameescape(a:name) .. "/output.log"
     end
@@ -632,8 +633,8 @@ func VLog(name)
 endfunc
 func Log(name)
     let path=""
-    if isdirectory("C:/Users/Psy")
-        let path="C:/Users/Psy/Appdata/Roaming/" .. fnameescape(a:name) .."/output.log"
+    if isdirectory("C:/Users/Administrator")
+        let path="C:/Users/Administrator/Appdata/Roaming/" .. fnameescape(a:name) .."/output.log"
     else
         let path="C:/Users/Manko/Appdata/Roaming/" .. fnameescape(a:name) .. "/output.log"
     end
@@ -649,9 +650,9 @@ func Log(name)
 endfunc
 func GMLive(name)
     let path=""
-    if isdirectory("C:/Users/Psy")
-        let path="C:/Users/Psy/Appdata/Roaming/" .. fnameescape(a:name) .."/output.log"
-        execute("AsyncRun M:/GameMakerProjects/" .. a:name .. "/datafiles/GMLive/gmlive-server.exe")
+    if isdirectory("C:/Users/Administrator")
+        let path="C:/Users/Administrator/Appdata/Roaming/" .. fnameescape(a:name) .."/output.log"
+        execute("AsyncRun C:/Users/Administrator/Documents/GameMakerStudio2/" .. a:name .. "/datafiles/GMLive/gmlive-server.exe")
     else
         let path="C:/Users/Manko/Appdata/Roaming/" .. fnameescape(a:name) .. "/output.log"
         execute("AsyncRun C:/Users/Manko/Documents/GameMakerStudio2/" .. a:name .. "/datafiles/GMLive/gmlive-server.exe")
@@ -660,8 +661,8 @@ endfunc
 
 func GMLog(name)
     let path=""
-    if isdirectory("C:/Users/Psy")
-        let path="C:/Users/Psy/Appdata/Roaming/" .. fnameescape(a:name) .."/output.log"
+    if isdirectory("C:/Users/Administrator")
+        let path="C:/Users/Administrator/Appdata/Roaming/" .. fnameescape(a:name) .. "/output.log"
     else
         let path="C:/Users/Manko/Appdata/Roaming/" .. fnameescape(a:name) .. "/output.log"
     end
@@ -675,9 +676,9 @@ func GMLog(name)
     let timer=timer_start(500,'UpdateFile',{'repeat':-1})
     call timer_start(500,function('s:checktime'),{'repeat':-1})
 
-    if isdirectory("C:/Users/Psy")
-        let path="C:/Users/Psy/Appdata/Roaming/" .. fnameescape(a:name) .."/output.log"
-        execute("AsyncRun M:/GameMakerProjects/" .. a:name .. "/datafiles/GMLive/gmlive-server.exe")
+    if isdirectory("C:/Users/Administrator")
+        let path="C:/Users/Administrator/Appdata/Roaming/" .. fnameescape(a:name) .."/output.log"
+        execute("AsyncRun C:/Users/Administrator/Documents/GameMakerStudio2/" .. a:name .. "/datafiles/GMLive/gmlive-server.exe")
     else
         let path="C:/Users/Manko/Appdata/Roaming/" .. fnameescape(a:name) .. "/output.log"
         execute("AsyncRun C:/Users/Manko/Documents/GameMakerStudio2/" .. a:name .. "/datafiles/GMLive/gmlive-server.exe")
