@@ -1,3 +1,6 @@
+"Run vim inside godot
+"{file}" "{line},{col}"
+
 "https://github.com/windwp/nvim-autopairs
 "Plug 'windwp/nvim-autopairs'
 "https://github.com/kyazdani42/nvim-tree.lua
@@ -14,9 +17,16 @@
 "Plugin Manager: https://github.com/junegunn/vim-plug"
 call plug#begin(stdpath("config") . "/plug")
 
+"Colorschemes
+Plug 'folke/tokyonight.nvim', { 'as': 'tokyonight' }
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+
+"https://github.com/nvim-tree/nvim-tree.lua
+Plug 'nvim-tree/nvim-tree.lua'
+
 "https://github.com/nvim-telescope/telescope.nvim
-"Plug 'nvim-lua/plenary.nvim'
-"Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 Plug 'sharkdp/fd'
 
@@ -56,12 +66,46 @@ Plug 'mtth/scratch.vim'
 "https://github.com/skywind3000/asyncrun.vim
 Plug 'skywind3000/asyncrun.vim'
 
+"https://github.com/tpope/vim-fugitive
+Plug 'tpope/vim-fugitive'
+"
+"https://github.com/habamax/vim-godot
+Plug 'habamax/vim-godot'
+
 call plug#end()
 
-let g:asyncrun_open=5
-"See: https://github.com/skywind3000/asyncrun.vim/wiki/Playing-Sound 
-"let g:asyncrun_exit = "silent call system('afplay ~/.vim/notify.wav &')"
+
+" optionally enable 24-bit colour
+"vim.opt.termguicolors = true
+
+let g:asyncrun_open=10
+
 lua <<EOF
+-- disable netrw at the very start of your init.lua
+--vim.g.loaded_netrw = 1
+--vim.g.loaded_netrwPlugin = 1
+-- empty setup using defaults
+require("nvim-tree").setup()
+
+-- OR setup with some options
+require("nvim-tree").setup({
+  sort = {
+    sorter = "case_sensitive",
+  },
+  view = {
+    width = 30,
+  },
+  renderer = {
+    group_empty = true,
+  },
+  filters = {
+    dotfiles = true,
+  },
+})
+
+
+--See: https://github.com/skywind3000/asyncrun.vim/wiki/Playing-Sound 
+--let g:asyncrun_exit = "silent call system('afplay ~/.vim/notify.wav &')"
 require('lualine').setup {
     sections = {
       lualine_a = {'mode'},
@@ -98,6 +142,8 @@ require('cmp').setup({
 })
 --require("cmp_git").setup()
   -- Setup nvim-cmp.
+  require'lspconfig'.gdscript.setup{capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())}
+
   local cmp = require('cmp')
   local cmp_buffer = require('cmp_buffer')
 
@@ -250,7 +296,7 @@ endfunction
     filetype on
     filetype plugin on
     syntax on
-    colorscheme psycho
+    colorscheme tokyonight
     set background=dark
     set ruler
     set hlsearch
@@ -360,11 +406,12 @@ command! -nargs=+ Vrepyy
     map <M-k> zk<UP>
     map <M-u> [z
     map <M-d> ]z
-    map <leader>ti i["+string(i)+"]<ESC>
+    map <leader>ti i("+string(i)+")<ESC>
     "
 "--------------------------------------------------------------------------------------------\\
 "Normal maps                                                                                 ||
 "--------------------------------------------------------------------------------------------//
+    nnoremap <leader>tk :e C:\users\Administrator\desktop\tekken.txt<CR>
     "nnoremap <Left>  :expand("%:p:h")<TAB><CR>
     "nnoremap <Right> :expand("%:p:h")<S-TAB><CR>
     nnoremap <F5> :AsyncStop<CR>\|:AsyncRun run.bat<CR>
@@ -409,8 +456,8 @@ command! -nargs=+ Vrepyy
     nmap <silent> <leader>sv :so $MYVIMRC<CR>:Syndo filetype detect<CR>
     nmap <silent> <leader>ev :e $MYVIMRC<CR>
     nmap <leader>ve :e C:\Program Files (x86)\Vim\Vimfiles\
-    nmap <silent> <leader>eg :e C:\Users\Psy\AppData\Local\nvim\syntax\gml.vim<CR>
-    nmap <leader>ek :e C:\Users\Psy\Appdata\Roaming\
+    nmap <silent> <leader>eg :e C:\Users\Administrator\AppData\Local\nvim\syntax\gml.vim<CR>
+    nmap <leader>ek :e C:\Users\Administrator\Appdata\Roaming\
     nmap <silent> <leader>oo :only<CR>
     "nmap gx gf<CR>:vs<CR>:e #<CR>
     nmap <F2> :Syndo filetype detect<CR>
@@ -436,11 +483,11 @@ command! -nargs=+ Vrepyy
 
     nmap <silent> <leader>wd v$3hxjjv$3hx
 
-    nmap <silent> <leader>fi ofor(var i=0;i<;i++){2f;i
-    nmap <silent> <leader>fj ofor(var j=0;j<;j++){2f;i
-    nmap <silent> <leader>fk ofor(var k=0;k<;k++){2f;i
-    nmap <silent> <leader>fl ofor(var l=0;l<;l++){2f;i
-    nmap <silent> <leader>fm ofor(var i=ds_map_find_first(_map);IsDefined(i);i=ds_map_find_next(_map,i)){o
+    nmap <silent> <leader>fi ofor(var i = 0; i < ; i++){2f;i
+    nmap <silent> <leader>fj ofor(var j = 0; j < ; j++){2f;i
+    nmap <silent> <leader>fk ofor(var k = 0; k < ; k++){2f;i
+    nmap <silent> <leader>fl ofor(var l = 0; l < ; l++){2f;i
+    nmap <silent> <leader>fm ofor(var i = ds_map_find_first(_map);IsDefined(i);i=ds_map_find_next(_map,i)){o
 
     nmap <silent> <leader>br oBreakpoint();<ESC>
 
@@ -527,7 +574,7 @@ command! -nargs=+ Vrepyy
     nmap <leader>drw idraw_sprite(sprite_index,image_index,x,y);<ESC>
     nmap <leader>dre idraw_sprite_ext(sprite_index,image_index,x,y,image_xscale,image_yscale,image_angle,image_blend,image_alpha);<ESC>
     nmap <leader>gmf k^wvt(yolive_name="<C-R>"";<ESC>
-    nmap <leader>gmm k^veyolive_name="<C-R>"";<ESC>
+    nmap <leader>gmm k^veyolive_name = "<C-R>"";<ESC>
     nmap <leader>gml Oif(live_call()) return live_result;<ESC>
     " Find files using Telescope command-line sugar.
     nnoremap <leader>ff <cmd>Telescope find_files<cr>
@@ -535,7 +582,7 @@ command! -nargs=+ Vrepyy
     nnoremap <leader>fb <cmd>Telescope buffers<cr>
     "nnoremap <leader>fh <cmd>Telescope help_tags<cr>
     " NVim Tree
-    nnoremap <leader>ntt <cmd>NvimTreeToggle<cr>
+    nnoremap <TAB><TAB> <cmd>NvimTreeToggle<cr>
     nnoremap <leader>ntf <cmd>NvimTreeFocus<cr>
     nnoremap <leader>ntc <cmd>NvimTreeCollapse<cr>
     " Fold method
@@ -550,6 +597,8 @@ command! -nargs=+ Vrepyy
     nnoremap <leader>cpa :AsyncRun g++ -Wall -Weffc++ -Wextra -Wconversion -Wsign-conversion -pedantic-errors -Werror -o %:t:r %:t
     nnoremap <leader>cpr :AsyncRun %:t:r.exe<CR>
     nnoremap <f7> :AsyncRun g++ -Wall -Weffc++ -Wextra -Wconversion -Wsign-conversion -pedantic-errors -Werror -o %:t:r %:t<CR>
+
+    nnoremap <leader>fsm ofsm.add("",{<CR>enter: function(){<CR>},<CR>leave: function(){<CR>},<CR>step: function(){<CR>},<CR>draw: function(){<CR>draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);<CR>}<CR>});<ESC>10kf"a
 "-------------------------------------------------------------------------------------------\\
 "Visual maps                                                                                ||
 "-------------------------------------------------------------------------------------------//
