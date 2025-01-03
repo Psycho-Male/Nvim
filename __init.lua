@@ -6,20 +6,51 @@ require "cmd"
 
 
 require('telescope').setup()
-require('nvim-tree').setup()
+require("nvim-tree").setup({
+  sort = {
+    sorter = "modification_time",
+  },
+  view = {
+    width = 30,
+  },
+  renderer = {
+    group_empty = true,
+  },
+  filters = {
+    dotfiles = true,
+  },
+})
+require('lualine').setup {
+    sections = {
+      lualine_a = {'mode'},
+      lualine_b = {'branch', 'diff', 'diagnostics'},
+      lualine_c = {'%F'},
+      lualine_x = {'encoding', 'fileformat', 'filetype'},
+      lualine_y = {'progress'},
+      lualine_z = {'location'}
+    },
+    inactive_sections = {
+      lualine_a = {},
+      lualine_b = {'%F'},
+      lualine_c = {},
+      lualine_x = {},
+      lualine_y = {},
+      lualine_z = {},
+    },
+}
 
 
 
 
 -- disable netrw at the very start of your init.lua (strongly advised)
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+--vim.g.loaded_netrw = 1
+--vim.g.loaded_netrwPlugin = 1
 
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
 
 
-vim.opt.completeopt=menu,menuone,noselect
+--vim.opt.completeopt=menu,menuone,noselect
 
 -- Setup nvim-cmp.
 local cmp = require('cmp')

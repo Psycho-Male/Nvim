@@ -17,6 +17,7 @@
 "Plugin Manager: https://github.com/junegunn/vim-plug"
 call plug#begin(stdpath("config") . "/plug")
 
+
 "Colorschemes
 Plug 'folke/tokyonight.nvim', { 'as': 'tokyonight' }
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
@@ -84,13 +85,10 @@ lua <<EOF
 -- disable netrw at the very start of your init.lua
 --vim.g.loaded_netrw = 1
 --vim.g.loaded_netrwPlugin = 1
--- empty setup using defaults
-require("nvim-tree").setup()
-
--- OR setup with some options
+-- Sort option can be "name"`, `"case_sensitive"`, `"modification_time"`, `"extension"`, `"suffix"`, `"filetype"` or a function.
 require("nvim-tree").setup({
   sort = {
-    sorter = "case_sensitive",
+    sorter = "modification_time",
   },
   view = {
     width = 30,
@@ -102,7 +100,49 @@ require("nvim-tree").setup({
     dotfiles = true,
   },
 })
+local function my_on_attach(bufnr)
+  local api = require("nvim-tree.api")
 
+  local function opts(desc)
+    return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+  end
+  vim.keymap.del("n", "q", { buffer = bufnr })
+  require("nvim-tree").setup({
+    ---
+    on_attach = my_on_attach,
+    ---
+  })
+end
+vim.api.nvim_create_autocmd("QuitPre", {
+  callback = function()
+    local invalid_win = {}
+    local wins = vim.api.nvim_list_wins()
+    for _, w in ipairs(wins) do
+      local bufname = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(w))
+      if bufname:match("NvimTree_") ~= nil then
+        table.insert(invalid_win, w)
+      end
+    end
+    if #invalid_win == #wins - 1 then
+      -- Should quit, so we close all invalid windows.
+      for _, w in ipairs(invalid_win) do vim.api.nvim_win_close(w, true) end
+    end
+  end
+})
+-- init.lua
+local nvimTreeFocusOrToggle = function ()
+    local nvimTree=require("nvim-tree.api")
+        local currentBuf = vim.api.nvim_get_current_buf()
+            local currentBufFt = vim.api.nvim_get_option_value("filetype", { buf = currentBuf })
+                if currentBufFt == "NvimTree" then
+                            nvimTree.tree.toggle()
+                                else
+                                            nvimTree.tree.focus()
+                                                end
+                                                end
+
+
+                                                vim.keymap.set("n", "<S-TAB>", nvimTreeFocusOrToggle)
 
 --See: https://github.com/skywind3000/asyncrun.vim/wiki/Playing-Sound 
 --let g:asyncrun_exit = "silent call system('afplay ~/.vim/notify.wav &')"
@@ -244,6 +284,7 @@ else
     --vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2/Kingdom Lost Reborn")
     --vim.fn.chdir("C:/Users/Manko/Documents/GameMakerStudio2/Kalyzmyr")
 end
+vim.fn.chdir("C:/Users/Administrator/Documents/goblin-escape")
 EOF
 
 
@@ -402,8 +443,10 @@ command! -nargs=+ Vrepyy
     map mm :nohl<ENTER>
     "map <M-j> zj
     "map <M-k> zk
-    map <M-j> <DOWN>zj<UP>
-    map <M-k> zk<UP>
+    "map <M-j> <DOWN>zj<UP>
+    "map <M-k> zk<UP>
+    map <M-j> zj
+    map <M-k> zk
     map <M-u> [z
     map <M-d> ]z
     map <leader>ti i("+string(i)+")<ESC>
@@ -414,8 +457,10 @@ command! -nargs=+ Vrepyy
     nnoremap <leader>tk :e C:\users\Administrator\desktop\tekken.txt<CR>
     "nnoremap <Left>  :expand("%:p:h")<TAB><CR>
     "nnoremap <Right> :expand("%:p:h")<S-TAB><CR>
+    "nnoremap <F5> :AsyncStop<CR>\|:AsyncRun C:\Programs\Godot\Godot_v4.3-stable_win64.exe Scenes\game.tscn<CR>
     nnoremap <F5> :AsyncStop<CR>\|:AsyncRun run.bat<CR>
     nnoremap <F6> :AsyncRun run.bat 
+    "nnoremap <F6> :AsyncStop<CR>\|:AsyncRun C:\Programs\Godot\Godot_v4.3-stable_win64.exe Scenes\.tscn<LEFT><LEFT><LEFT><LEFT><LEFT>
     nnoremap <F4> :AsyncStop<CR>
     nnoremap <leader>vv :execute "Ack! " expand("<cword>")<CR>
     nnoremap <leader>vg :execute "Ack! -G .gml " expand("<cword>")<CR>
@@ -477,7 +522,8 @@ command! -nargs=+ Vrepyy
     nmap <silent> <leader>sd oTrace("");<ESC>2hi
     nmap <silent> <leader>cx oTrace(""+string());<ESC>F"i
     nmap <silent> <leader>cs oTrace("--CALLSTACK--");for(var i=0,cs=debug_get_callstack();i<array_length(cs);i++) Trace(cs[i]);<ESC>
-    nmap <silent> <leader>tp ^eaPop<ESC>
+    nmap <silent> <leader>tp yiwiprint("<ESC>A: "+str());<ESC>hhP
+    "nmap <silent> <leader>tp ^eaPop<ESC>
     "nmap <silent> <leader>ww o//<ESC>90a=<ESC>a\\<CR>//<ESC>90a<SPACE><ESC>a\|\|<ESC>o//<ESC>90a=<ESC>A//<ESC>kk^llR@PsychoMale<ESC>j
     nmap <silent> <leader>ww o//<ESC>90a=<ESC>a\\<CR>//<ESC>90a<SPACE><ESC>a\|\|<ESC>o//<ESC>90a=<ESC>A//<ESC>kk^llR
 
@@ -582,9 +628,9 @@ command! -nargs=+ Vrepyy
     nnoremap <leader>fb <cmd>Telescope buffers<cr>
     "nnoremap <leader>fh <cmd>Telescope help_tags<cr>
     " NVim Tree
-    nnoremap <TAB><TAB> <cmd>NvimTreeToggle<cr>
-    nnoremap <leader>ntf <cmd>NvimTreeFocus<cr>
-    nnoremap <leader>ntc <cmd>NvimTreeCollapse<cr>
+    nnoremap <leader>ntt <cmd>NvimTreeToggle<cr>
+    nnoremap <leader>ntf <cmd>nvimTreeFocusOrToggle<cr>
+    nnoremap <C-n> <cmd>NvimTreeClose<cr>
     " Fold method
     nnoremap <leader>fmm <cmd>set foldmethod=marker<cr>
     nnoremap <leader>fmi <cmd>set foldmethod=indent<cr>
@@ -732,6 +778,31 @@ func GMLog(name)
         let path="C:/Users/Manko/Appdata/Roaming/" .. fnameescape(a:name) .. "/output.log"
         execute("AsyncRun C:/Users/Manko/Documents/GameMakerStudio2/" .. a:name .. "/datafiles/GMLive/gmlive-server.exe")
     end
+endfunc
+
+func GM()
+    nnoremap <F5> :AsyncStop<CR>\|:AsyncRun run.bat<CR>
+    nnoremap <F6> :AsyncRun run.bat 
+    nmap <silent> <leader>tt yiwiTrace("<ESC>A: "+string());<ESC>hhP
+    nmap <silent> <leader>td yiwiGuiTrace("<ESC>A: ",);<ESC>hP
+
+    vmap <silent> <leader>tt   yiTrace("<ESC>A: "+string());<ESC>hhP
+    vmap <silent> <leader>td   yiGuiTrace("<ESC>A: ",);<ESC>hP
+
+    nnoremap <leader>vg :execute "Ack! -G .gml " expand("<cword>")<CR>
+    nnoremap <leader>ag :Ack! -G .gml 
+endfunc
+
+func Godot()
+    nnoremap <F5> :AsyncStop<CR>\|:AsyncRun C:\Programs\Godot\Godot_v4.3-stable_win64.exe Scenes\game.tscn<CR>
+    nnoremap <F6> :AsyncStop<CR>\|:AsyncRun C:\Programs\Godot\Godot_v4.3-stable_win64.exe Scenes\.tscn<LEFT><LEFT><LEFT><LEFT><LEFT>
+    nmap <silent> <leader>tt yiwiprint("<ESC>A: "+str())<ESC>hhP
+    nmap <silent> <leader>td yiwiDebugger.printui("<ESC>A: ",)<ESC>hP
+    vmap <silent> <leader>tt yiprint("<ESC>A: "+string());<ESC>hhP
+    vmap <silent> <leader>td yiDebugger.printui("<ESC>A: ",);<ESC>hP
+
+    nnoremap <leader>vg :execute "Ack! -G .gd " expand("<cword>")<CR>
+    nnoremap <leader>ag :Ack! -G .gd 
 endfunc
 
 "Buffer command taken from: https://vim.fandom.com/wiki/Easier_buffer_switching
